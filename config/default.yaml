@@ -1,4 +1,4 @@
-partition: quake
+partition: quake,normal
 inputDir: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data
 outputDir: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/htseq_star_results
 plates:
