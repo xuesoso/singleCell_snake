@@ -2,7 +2,7 @@
 #
 #SBATCH --job-name=snake_scRNA_seq
 #
-#SBATCH --time=6:00:00
+#SBATCH --time=48:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=quake,normal
