@@ -3,13 +3,6 @@ import os, glob
 ##### Function for loading files
 def get_all_fqgz(wildcards):
     """ Return all samples containing read 1 and read 2 under current folder """
-    # r1 = glob.glob('{root_dir}/{plate}/{sample}/*R1*.fastq.gz'.format(root_dir=wildcards.root_dir,
-                                                                # plate=wildcards.plate,
-                                                                # sample=wildcards.sample))
-    # r2 = glob.glob('{root_dir}/{plate}/{sample}/*R2*.fastq.gz'.format(root_dir=wildcards.root_dir,
-                                                                # plate=wildcards.plate,
-                                                                # sample=wildcards.sample))
-    # assert len(r1) == 1, '{plate}/{sample}'.format(plate=wildcards.plate, sample=wildcards.sample)
     r1 = glob.glob('{sample}/*R1*.fastq.gz'.format(sample=wildcards.all_samples))
     r2 = glob.glob('{sample}/*R2*.fastq.gz'.format(sample=wildcards.all_samples))
     assert len(r1) == 1, '{sample}'.format(wildcards.all_samples)
@@ -17,7 +10,6 @@ def get_all_fqgz(wildcards):
     return [r1[0], r2[0]]
 
 # ##### Functions for getting file names and unzipping files
-
 def get_all_files(d):
     return [d+"/"+f for f in os.listdir(d) if os.path.isfile(os.path.join(d, f))]
 
@@ -26,6 +18,7 @@ def unzip_fastq(f):
     p = subprocess.Popen(cmd, shell=True)
     return None
 
+## Functions for merging tables
 def merge_htseq_tables(matches, outfile):
 # Print directory containing each file
     print(matches)
@@ -142,7 +135,7 @@ def merge_star_tables(matches, outfile):
             line = "\t".join([sample] + my_stats)
             out.write(line + "\n")
 
-## Separate inputs into N chunks
+## Experimental: separate inputs into N chunks
 def chunks(l, n=40):
     out = []
     chunkid = []
