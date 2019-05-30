@@ -1,0 +1,10 @@
+{
+    "__default__":
+    {
+        "account": "yuanxue",
+        "mem": "32000",
+        "time": "00:10:0",
+        "partition": "quake,normal",
+        "ntasks": "1"
+    }
+}

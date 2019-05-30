@@ -1,0 +1,11 @@
+partition: quake,normal
+inputDir: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data
+outputDir: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/htseq_star_results
+plates:
+    - NS15/1009900603
+    - NS15/1009900606
+refIndex: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_GT1_genome/MM_TGGT1_transgenes_gff3_index
+annotation: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_GT1_genome/ToxoDB-36_TgondiiGT1.tdt_gfp.musculus.ercc.gff3
+htseq_mode: intersect_strict
+chunksize: 40
+outname: 190529_ns15_0603_0606
