@@ -22,11 +22,7 @@ for f in PLATES:
     base = os.path.join(root_dir, f)
     for j in (os.listdir(base)):
         all_samples.extend([os.path.join(base, j)])
-groups, chunkid = chunks(all_samples, CHUNKSIZE)
-# for g, c in zip(groups, chunkid):
-    # with open(root_dir+'/'+c, 'w') as f:
-        # for sample in g:
-            # f.write('%s\n' %sample)
+# groups, chunkid = chunks(all_samples, CHUNKSIZE)
 
 ## Define wildcards for outputs
 outfile = config['outputDir']

@@ -55,11 +55,6 @@ def merge_htseq_tables(matches, outfile):
             out.write(line + "\n")
 
 def merge_star_tables(matches, outfile):
-# Find all Log.final.out files within directory
-    # matches = []
-    # with open(seedfile, 'r') as f:
-        # for line in f:
-            # matches.append(f.strip()+'/Log.final.out')
 # Print directory containing each file
     print(matches)
     print(outfile)
@@ -110,7 +105,6 @@ def merge_star_tables(matches, outfile):
                 elif "% of reads mapped to too many loci" in line:
                     x = line.rstrip().split()[-1]
                     percent_reads_unmapped_too_many_loci.append(x)
-
 # Write output
     features = ["input",
                 "read_length",
