@@ -2,4 +2,4 @@ log/*
 bos/
 _old_scripts/
 *.snakemake/
-!config/default.yaml
+config/default.yaml
