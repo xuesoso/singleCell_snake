@@ -1,0 +1,99 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	htseq
+	1
+
+[Thu May 30 08:37:14 2019]
+rule htseq:
+    input: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901306/YX_1009901306_B8_S288/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901306/YX_1009901306_B8_S288/Log.final.out
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901306/YX_1009901306_B8_S288/htseq.tab
+    jobid: 0
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901306/YX_1009901306_B8_S288
+
+100000 GFF lines processed.
+200000 GFF lines processed.
+300000 GFF lines processed.
+400000 GFF lines processed.
+500000 GFF lines processed.
+600000 GFF lines processed.
+700000 GFF lines processed.
+800000 GFF lines processed.
+900000 GFF lines processed.
+1000000 GFF lines processed.
+1100000 GFF lines processed.
+1200000 GFF lines processed.
+1300000 GFF lines processed.
+1400000 GFF lines processed.
+1500000 GFF lines processed.
+1600000 GFF lines processed.
+1700000 GFF lines processed.
+1800000 GFF lines processed.
+1900000 GFF lines processed.
+2000000 GFF lines processed.
+2100000 GFF lines processed.
+2200000 GFF lines processed.
+2300000 GFF lines processed.
+2400000 GFF lines processed.
+2500000 GFF lines processed.
+2600000 GFF lines processed.
+2700000 GFF lines processed.
+2800000 GFF lines processed.
+2900000 GFF lines processed.
+3000000 GFF lines processed.
+3100000 GFF lines processed.
+3200000 GFF lines processed.
+3300000 GFF lines processed.
+3400000 GFF lines processed.
+3500000 GFF lines processed.
+3600000 GFF lines processed.
+3700000 GFF lines processed.
+3800000 GFF lines processed.
+3900000 GFF lines processed.
+3916748 GFF lines processed.
+100000 SAM alignment record pairs processed.
+200000 SAM alignment record pairs processed.
+300000 SAM alignment record pairs processed.
+400000 SAM alignment record pairs processed.
+500000 SAM alignment record pairs processed.
+600000 SAM alignment record pairs processed.
+700000 SAM alignment record pairs processed.
+800000 SAM alignment record pairs processed.
+900000 SAM alignment record pairs processed.
+1000000 SAM alignment record pairs processed.
+1100000 SAM alignment record pairs processed.
+1200000 SAM alignment record pairs processed.
+1300000 SAM alignment record pairs processed.
+1400000 SAM alignment record pairs processed.
+1500000 SAM alignment record pairs processed.
+1600000 SAM alignment record pairs processed.
+1700000 SAM alignment record pairs processed.
+1800000 SAM alignment record pairs processed.
+1900000 SAM alignment record pairs processed.
+2000000 SAM alignment record pairs processed.
+2100000 SAM alignment record pairs processed.
+2200000 SAM alignment record pairs processed.
+2300000 SAM alignment record pairs processed.
+2400000 SAM alignment record pairs processed.
+2500000 SAM alignment record pairs processed.
+2600000 SAM alignment record pairs processed.
+2700000 SAM alignment record pairs processed.
+2800000 SAM alignment record pairs processed.
+2900000 SAM alignment record pairs processed.
+3000000 SAM alignment record pairs processed.
+3100000 SAM alignment record pairs processed.
+3200000 SAM alignment record pairs processed.
+3300000 SAM alignment record pairs processed.
+3400000 SAM alignment record pairs processed.
+Warning: Mate records missing for 162432 records; first such record: <SAM_Alignment object: Paired-end read 'A00111:298:HJ7KYDSXX:3:2230:2013:9831' aligned to TGGT1_chrIa:[41757,41856)/+>.
+3500000 SAM alignment record pairs processed.
+3600000 SAM alignment record pairs processed.
+Warning: Mate pairing was ambiguous for 10229 records; mate key for first such record: ('A00111:298:HJ7KYDSXX:2:2153:19217:8844', 'first', 'TGGT1_chrII', 173325, 'TGGT1_chrII', 173462, 675).
+3641233 SAM alignment pairs processed.
+0 SAM alignments  processed.
+[Thu May 30 08:47:52 2019]
+Finished job 0.
+1 of 1 steps (100%) done

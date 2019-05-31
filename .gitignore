@@ -1,4 +1,4 @@
-log/
+!log/empty.log
 bos/
 _old_scripts/
 *.snakemake/

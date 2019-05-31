@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 6
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	star
+	1
+
+[Thu May 30 11:06:30 2019]
+rule star:
+    input: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_GT1_genome/MM_TGGT1_transgenes_gff3_index, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901308/YX_1009901308_G7_S23/YX_1009901308_G7_S23_R1_001.fastq.gz, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901308/YX_1009901308_G7_S23/YX_1009901308_G7_S23_R2_001.fastq.gz
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901308/YX_1009901308_G7_S23/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901308/YX_1009901308_G7_S23/Log.final.out
+    jobid: 0
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901308/YX_1009901308_G7_S23
+    threads: 6
+
+/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901308/YX_1009901308_G7_S23/
+May 30 11:06:30 ..... started STAR run
+May 30 11:06:30 ..... loading genome
+May 30 11:07:07 ..... started 1st pass mapping
+May 30 11:12:22 ..... finished 1st pass mapping
+May 30 11:12:23 ..... inserting junctions into the genome indices
+May 30 11:13:26 ..... started mapping
+May 30 11:19:39 ..... finished mapping
+May 30 11:19:41 ..... started sorting BAM
+May 30 11:20:05 ..... finished successfully
+[Thu May 30 11:20:06 2019]
+Finished job 0.
+1 of 1 steps (100%) done
