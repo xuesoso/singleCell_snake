@@ -19,3 +19,6 @@ rule star:
 May 30 23:27:21 ..... started STAR run
 May 30 23:27:21 ..... loading genome
 May 30 23:27:51 ..... started 1st pass mapping
+May 30 23:32:15 ..... finished 1st pass mapping
+May 30 23:32:16 ..... inserting junctions into the genome indices
+May 30 23:33:17 ..... started mapping

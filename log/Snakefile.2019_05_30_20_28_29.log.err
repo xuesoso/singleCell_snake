@@ -4736,3 +4736,82 @@ Finished job 1196.
 [Thu May 30 23:30:55 2019]
 Finished job 1333.
 231 of 946 steps (24%) done
+Submitted job 856 with external jobid 'Submitted batch job 43704506'.
+
+[Thu May 30 23:31:08 2019]
+rule htseq:
+    input: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_G2/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_G2/Log.final.out
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_G2/htseq.tab
+    jobid: 423
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_G2
+
+Submitted job 423 with external jobid 'Submitted batch job 43704512'.
+
+[Thu May 30 23:31:09 2019]
+rule star:
+    input: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_GT1_genome/MM_TGGT1_transgenes_gff3_index, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_M4/YX_1009900603_M4_S76_R1_001.fastq.gz, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_M4/YX_1009900603_M4_S76_R2_001.fastq.gz
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_M4/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_M4/Log.final.out
+    jobid: 929
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_M4
+    threads: 6
+
+Submitted job 929 with external jobid 'Submitted batch job 43704526'.
+
+[Thu May 30 23:31:09 2019]
+rule star:
+    input: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_GT1_genome/MM_TGGT1_transgenes_gff3_index, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_K15/YX_1009900603_K15_S39_R1_001.fastq.gz, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_K15/YX_1009900603_K15_S39_R2_001.fastq.gz
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_K15/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_K15/Log.final.out
+    jobid: 836
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_K15
+    threads: 6
+
+Submitted job 836 with external jobid 'Submitted batch job 43704529'.
+[Thu May 30 23:31:54 2019]
+Finished job 1205.
+232 of 946 steps (25%) done
+
+[Thu May 30 23:31:54 2019]
+rule htseq:
+    input: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_G9/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_G9/Log.final.out
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_G9/htseq.tab
+    jobid: 701
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_G9
+
+Submitted job 701 with external jobid 'Submitted batch job 43704792'.
+[Thu May 30 23:33:23 2019]
+Finished job 1241.
+233 of 946 steps (25%) done
+
+[Thu May 30 23:33:24 2019]
+rule htseq:
+    input: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_C4/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_C4/Log.final.out
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_C4/htseq.tab
+    jobid: 504
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_C4
+
+Submitted job 504 with external jobid 'Submitted batch job 43704946'.
+[Thu May 30 23:33:54 2019]
+Finished job 1284.
+234 of 946 steps (25%) done
+
+[Thu May 30 23:33:54 2019]
+rule htseq:
+    input: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_J7/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_J7/Log.final.out
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_J7/htseq.tab
+    jobid: 547
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_J7
+
+[Thu May 30 23:33:54 2019]
+Finished job 987.
+235 of 946 steps (25%) done
+Submitted job 547 with external jobid 'Submitted batch job 43704994'.
+
+[Thu May 30 23:33:54 2019]
+rule star:
+    input: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_GT1_genome/MM_TGGT1_transgenes_gff3_index, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_H17/YX_1009900603_H17_S269_R1_001.fastq.gz, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_H17/YX_1009900603_H17_S269_R2_001.fastq.gz
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_H17/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_H17/Log.final.out
+    jobid: 810
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900603/YX_1009900603_H17
+    threads: 6
+
+Submitted job 810 with external jobid 'Submitted batch job 43704996'.
