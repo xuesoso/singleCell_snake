@@ -1,5 +1,7 @@
 log/*
+!log/empty.log
 bos/
 _old_scripts/
 *.snakemake/
-config/default.yaml
+config/*
+!config/default.yaml
