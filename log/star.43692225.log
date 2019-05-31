@@ -22,3 +22,9 @@ May 30 23:18:43 ..... started 1st pass mapping
 May 30 23:21:51 ..... finished 1st pass mapping
 May 30 23:21:52 ..... inserting junctions into the genome indices
 May 30 23:22:42 ..... started mapping
+May 30 23:25:54 ..... finished mapping
+May 30 23:25:55 ..... started sorting BAM
+May 30 23:27:54 ..... finished successfully
+[Thu May 30 23:27:57 2019]
+Finished job 0.
+1 of 1 steps (100%) done

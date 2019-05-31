@@ -7,12 +7,12 @@ Job counts:
 	1	htseq
 	1
 
-[Thu May 30 23:21:56 2019]
+[Thu May 30 23:27:34 2019]
 rule htseq:
-    input: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_D11/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_D11/Log.final.out
-    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_D11/htseq.tab
+    input: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_O17/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_O17/Log.final.out
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_O17/htseq.tab
     jobid: 0
-    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_D11
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS15/1009900606/YX_1009900606_O17
 
 100000 GFF lines processed.
 200000 GFF lines processed.
@@ -57,11 +57,10 @@ rule htseq:
 100000 SAM alignment record pairs processed.
 200000 SAM alignment record pairs processed.
 300000 SAM alignment record pairs processed.
-Warning: Mate records missing for 22575 records; first such record: <SAM_Alignment object: Paired-end read 'A00111:160:H5CKLDSXX:2:1322:29903:26443' aligned to TGGT1_chrIa:[37673,37773)/+>.
-400000 SAM alignment record pairs processed.
-Warning: Mate pairing was ambiguous for 363 records; mate key for first such record: ('A00111:160:H5CKLDSXX:4:1140:30047:2112', 'first', 'TGGT1_chrIb', 1425893, 'TGGT1_chrIb', 1426095, 430).
-409703 SAM alignment pairs processed.
+Warning: Mate records missing for 22470 records; first such record: <SAM_Alignment object: Paired-end read 'A00111:160:H5CKLDSXX:2:2506:17797:22921' aligned to TGGT1_chrIa:[7963,8063)/+>.
+Warning: Mate pairing was ambiguous for 717 records; mate key for first such record: ('A00111:160:H5CKLDSXX:1:1638:20048:4711', 'first', 'TGGT1_chrII', 634866, 'TGGT1_chrII', 635070, 301).
+383423 SAM alignment pairs processed.
 0 SAM alignments  processed.
-[Thu May 30 23:24:08 2019]
+[Thu May 30 23:29:40 2019]
 Finished job 0.
 1 of 1 steps (100%) done

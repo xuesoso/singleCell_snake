@@ -31641,3 +31641,15 @@ rule htseq:
     wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901309/YX_1009901309_J14_S102
 
 Submitted job 1402 with external jobid 'Submitted batch job 43703677'.
+[Thu May 30 23:29:37 2019]
+Finished job 248.
+2203 of 3075 steps (72%) done
+
+[Thu May 30 23:29:37 2019]
+rule htseq:
+    input: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901309/YX_1009901309_K21_S133/Aligned.sortedByCoord.out.bam, /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901309/YX_1009901309_K21_S133/Log.final.out
+    output: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901309/YX_1009901309_K21_S133/htseq.tab
+    jobid: 1256
+    wildcards: all_samples=/oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data/NS32/1009901309/YX_1009901309_K21_S133
+
+Submitted job 1256 with external jobid 'Submitted batch job 43704300'.
