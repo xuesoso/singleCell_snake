@@ -22,7 +22,6 @@ for f in PLATES:
     base = os.path.join(root_dir, f)
     for j in (os.listdir(base)):
         all_samples.extend([os.path.join(base, j)])
-# groups, chunkid = chunks(all_samples, CHUNKSIZE)
 
 ## Define wildcards for outputs
 outfile = config['outputDir']
@@ -32,7 +31,7 @@ else:
     outname = config['outname']
 
 ## Rules
-""" We are going to separate samples into groups of specified sizes """
+""" Future goal: separate samples into groups of specified sizes """
 """ Then we are going to perform STAR in each group while keeping the """
 """ genome index in memory. This saves a lot of loading time """
 rule star:

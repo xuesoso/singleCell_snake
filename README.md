@@ -23,20 +23,20 @@ Usage
 Replace {CUSTOM.YAML} with matching config.yaml under config/
 Submit remote master job on cluster 
 ```bash
-sbatch do.sh {CUSTOM.YAML}
+sh do.sh {CUSTOM.YAML}
 ```
 
 To do a dry run
 ```bash
-sbatch do.sh {CUSTOM.YAML} dry
+sh do.sh {CUSTOM.YAML} dry
 ```
 
 To unlock previously failed snakemake run
 ```bash
-sbatch do.sh {CUSTOM.YAML} unlock
+sh do.sh {CUSTOM.YAML} unlock
 ```
 
 To force a rerun
 ```bash
-sbatch do.sh {CUSTOM.YAML} rerun
+sh do.sh {CUSTOM.YAML} rerun
 ```
