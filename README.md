@@ -4,9 +4,9 @@ Snakemake pipeline for STAR alignment + htseq-count expression quantification fo
 
 Work in progress
 ----------------
-+ Now: Add support for transcript to gene matrix transformation
+<del>+ Now: Add support for transcript to gene matrix transformation
+<del>+ Now: Modularize rules
 + Now: Add support for writing to anndata object
-+ Now: Modularize rules
 + Now: Add sample dataset
 + Future: Enable support for chunky STAR alignment and htseq-count to save memory loading time.
 + Future: single-cell variant counting analysis
