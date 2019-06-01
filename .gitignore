@@ -1,5 +1,5 @@
 log/*
-!log/empty.log
+!log/.empty
 bos/
 _old_scripts/
 *.snakemake/

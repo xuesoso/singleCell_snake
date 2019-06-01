@@ -1,4 +1,6 @@
 import os, glob
+import pandas as pd
+import numpy as np
 
 ##### Function for loading files
 def get_all_fqgz(wildcards):
@@ -129,6 +131,68 @@ def merge_star_tables(matches, outfile):
             line = "\t".join([sample] + my_stats)
             out.write(line + "\n")
 
+## Preprocessing of expression matrix
+
+''' Convert transcript expression matrix to gene expression matrix '''
+def convert_transcript_to_gene(infile, transcript_annotation, outfile,
+                       remove_last_nrows=5):
+    X = load_dataframes(infile, remove_last_nrows=remove_last_nrows)
+    ann = pd.read_csv(transcript_annotation, sep='\t', index_col=0)
+    Y = convert_id_to_gene(X, ann, start='transcript', end='gene')
+    Y.to_csv(outfile, sep='\t', compression='gzip')
+
+''' Load expression matrix as pandas dataframe. Typically we remove the last
+    five rows from htseq output as they contain counting parameters.
+'''
+def load_dataframes(input_list, axis=1, remove_last_nrows=0,
+                    strip_header=True, sample_prefix=[], transpose=False):
+    df = pd.DataFrame()
+    if type(input_list) is str:
+        input_list = [input_list]
+    if len(sample_prefix) > 0:
+        assert len(sample_prefix) == len(input_list), 'Number of sample prefix\
+                must match the number of provided input dirs'
+
+    for ind, f in enumerate(input_list):
+        if ind == 0:
+            df = pd.read_csv(f, index_col=0, sep='\t')
+            if transpose == True:
+                df = df.T
+            if len(sample_prefix) > 0:
+                df.columns = [sample_prefix[ind] + '_' + x for x \
+                              in df.columns.values]
+        else:
+            tmp = pd.read_csv(f, index_col=0, sep='\t')
+            if transpose == True:
+                tmp = tmp.T
+            if len(sample_prefix) > 0:
+                tmp.columns = [sample_prefix[ind] + '_' + x for x \
+                              in tmp.columns.values]
+            df = pd.concat([df, tmp], axis=axis)
+    if remove_last_nrows > 0:
+        df = df.iloc[:-remove_last_nrows, :]
+    if strip_header == True:
+        df.index = [x.replace('transcript:', '').replace('gene:', '') \
+                    if 'transgene:' not in x \
+                    else x for x in df.index.values]
+    return df
+
+''' Convert the row names from transcript to gene '''
+def convert_id_to_gene(X, gene_df, start='transcript', end='gene'):
+    dictionary = {}
+    for key, value in zip(gene_df[start].values, gene_df[end].values):
+        if type(key) is str:
+            if value == 'Unknown':
+                dictionary[key] = key
+            else:
+                dictionary[key] = value
+    out = X.copy()
+    new_names = [dictionary[x] if x in dictionary.keys() else x \
+                 for x in out.columns.values]
+    out.columns = new_names
+    out = group_sum(out, rows=False)
+    return out
+
 ## Experimental: separate inputs into N chunks
 def chunks(l, n=40):
     out = []
@@ -148,3 +212,189 @@ def write_chunks(wildcards):
 
 def load_chunks(wildcards):
     pass
+
+## Scripts to make dataframe mapping exon/transcript to gene and products
+''' Figure out transcript annotation name '''
+def transcript_annotation_name(infile):
+    filename = infile.split('/')[-1].split('.')[0]
+    dirname = '/'.join(infile.split('/')[:-1])
+    return os.path.join(dirname, filename)
+
+def make_annotation_dataframe(infile, outfile):
+    if outfile.split('.')[-1] != 'gz':
+        outfile += '.gz'
+    outpath = os.path.abspath(outfile)
+    outpath = '/'.join(outpath.split('/')[:-1])
+    if '.' in outfile.split('/')[-1]:
+        outname_exon = outpath+'/'+outfile.split('/')[-1].split('.')[0] + \
+               '_exon_annotation.tsv.gz'
+        outname_transcript = outpath+'/'+outfile.split('/')[-1].split('.')[0] + \
+               '_transcript_annotation.tsv.gz'
+    else:
+        outname_exon = outpath+'/exon_annotation.tsv.gz'
+        outname_transcript = outpath+'/transcript_annotation.tsv.gz'
+    print('Saving to {:}'.format(outname_exon))
+    print('Saving to {:}'.format(outname_transcript))
+    t_interest_type = ['transcript', 'mRNA', 'tRNA', 'ncRNA', 'rRNA', 'pseudogenic_transcript']
+    g_interest_type = ['gene', 'pseudogene', 'ncRNA_gene']
+    special_transcripts = ['ERCC-', 'transgene:']
+    property_keywords = ['description=', 'Parent=', 'ID=']
+    null_word = 'Unknown'
+
+    def check_if_transcript(X, feature_type):
+        is_transcript = False
+        if X.split(':')[0] == 'transcript':
+            is_transcript = True
+        elif 'ENSMUST' in X:
+            is_transcript = True
+        else:
+            for u in t_interest_type:
+                if feature_type == u:
+                    is_transcript = True
+        return is_transcript
+
+    def check_if_gene(X, feature_type):
+        is_gene = False
+        if X.split(':')[0] == 'gene':
+            is_gene = True
+        elif 'ENSMUSG' in X:
+            is_gene = True
+        else:
+            for u in g_interest_type:
+                if feature_type == u:
+                    is_gene = True
+        return is_gene
+
+    def check_if_special(X):
+        is_special = False
+        for u in special_transcripts:
+            if u in X:
+                is_special = True
+        return is_special
+
+    id_length = {}
+    id_to_transcript = {}
+    transcript_to_gene = {}
+    all_t_to_gene = {}
+    id_desc = {}
+    parent_type = {}
+    all_id = []
+    all_transcript = []
+    with open(infile, 'r') as f:
+        for line in f:
+            if line[0] != '#':
+                split = line.rstrip().split('\t')
+                if len(split) > 8:
+                    feature_type = split[2]
+                    length = int(split[4]) - int(split[3])
+                    strand = split[6]
+                    description, parent, ID = null_word, null_word, null_word
+                    for u in split[8].split(';'):
+                        for i, keyword in enumerate(property_keywords):
+                            if keyword in u and i == 0:
+                                description = u.replace(keyword, '').\
+                                        split('[Source:')[0].replace('%2C ', ' ')
+                            elif keyword in u and i == 1:
+                                parent = u.replace(keyword, '')
+                            elif keyword in u and i == 2:
+                                ID = u.replace(keyword, '')
+                    if ID != null_word and feature_type != 'CDS':
+                        if ID not in parent_type.keys():
+                            parent_type[ID] = feature_type
+                        if ID not in id_length.keys():
+                            id_length[ID] = length
+                        if check_if_gene(ID, feature_type) == True:
+                            iam = 'gene'
+                        elif check_if_transcript(ID, feature_type) == True:
+                            iam = 'transcript'
+                        else:
+                            iam = 'id'
+                        if parent != null_word:
+                            if check_if_gene(parent, parent_type[parent]) == True:
+                                mom = 'gene'
+                            else:
+                                mom = 'transcript'
+                        if iam == 'id' or iam == 'transcript':
+                            is_special = check_if_special(ID)
+                            if iam == 'id':
+                                all_id.append(ID)
+                                if is_special is True:
+                                    all_transcript.append(ID)
+                            elif iam == 'transcript':
+                                all_transcript.append(ID)
+                            if mom == 'transcript':
+                                if ID not in id_to_transcript.keys():
+                                    id_to_transcript[ID] = [parent]
+                                elif parent not in id_to_transcript[ID]:
+                                    id_to_transcript[ID].append(parent)
+                            elif mom == 'gene':
+                                if ID not in transcript_to_gene.keys():
+                                    transcript_to_gene[ID] = [parent]
+                                elif parent not in transcript_to_gene[ID]:
+                                    transcript_to_gene[ID].append(parent)
+                                if iam == 'transcript' and \
+                                   ID not in all_t_to_gene.keys():
+                                    all_t_to_gene[ID] = [parent]
+                        else:
+                            if ID not in id_desc.keys():
+                                if description == null_word:
+                                    id_desc[ID] = 'hypothetical protein'
+                                else:
+                                    id_desc[ID] = description
+    df = pd.DataFrame(all_id, columns=['id'], dtype='object')
+    df['transcript'] = [id_to_transcript[x][0] for x in all_id]
+    all_t = [x for x in df['transcript'].values]
+    df['gene'] = [transcript_to_gene[x][0] if x in transcript_to_gene.keys() else \
+                  'Unknown' for x in all_t]
+    all_g = [x for x in df['gene'].values]
+    df['product'] = [id_desc[x] if x in id_desc.keys() else \
+                     'Unknown' for x in all_g]
+    df['length'] = [id_length[x] for x in df['id'].values]
+    df['gene'] = [x if 'ERCC-' not in y and 'transgene:' not in y else y\
+                  for x, y in zip(df['gene'].values, df['id'].values)]
+    df['product'] = [x if 'ERCC-' not in y and 'transgene:' not in y else y\
+                  for x, y in zip(df['product'].values, df['id'].values)]
+#### clean up the transcript / gene names
+    df['transcript']= [x.replace('transcript:','') for x in \
+                        df['transcript'].values]
+    df['gene']= [x.replace('gene:','') for x in \
+                        df['gene'].values]
+    df.to_csv(outname_exon, sep='\t', compression='gzip')
+#### we make a dictionary just for transcripts. Turns out there are many
+#### transcripts that all map to the same exons. So it's better to do feature
+#### counting in transcript space and convert transcript to genes.
+    df = pd.DataFrame(all_transcript, columns=['transcript'], dtype='object')
+    df['gene'] = [all_t_to_gene[x][0] if x in all_t_to_gene.keys() else \
+                  'Unknown' for x in all_transcript]
+    df['product'] = [id_desc[x] if x in id_desc.keys() else \
+                     'Unknown' for x in df['gene'].values]
+    df['transcript']= [x.replace('transcript:','') for x in \
+                        df['transcript'].values]
+    df['gene']= [x.replace('gene:','') for x in df['gene'].values]
+    df['gene'] = [x if 'ERCC-' not in y and 'transgene:' not in y else y\
+                  for x, y in zip(df['gene'].values, df['transcript'].values)]
+    df['product'] = [x if 'ERCC-' not in y and 'transgene:' not in y else y\
+                  for x, y in zip(df['product'].values, df['transcript'].values)]
+    df.to_csv(outname_transcript, sep='\t', compression='gzip')
+
+def group_sum(input_df, rows=False):
+    '''
+    Pandas groupby sum function is way too slow. So I came up with an
+    alternative.
+    '''
+    if rows:
+        input_df = input_df.copy().T
+    names, keys = np.unique(input_df.columns.values.astype(str),
+                            return_inverse=True)
+    n_keys = max(keys) + 1
+    result = np.zeros((np.shape(input_df)[0], n_keys))
+    gene_names = input_df.columns.values
+    new_cols = []
+    for i, new_name in zip(range(n_keys), names):
+        result[:, i] = np.sum(input_df.loc[:, keys == i], axis=1)
+        new_cols.append(new_name)
+    result = pd.DataFrame(result, columns=new_cols, index=input_df.index)
+    if rows:
+        result = result.T
+    return result
+
