@@ -51,5 +51,5 @@ include: "./rules/feature_to_gene.smk"
 rule all:
     input:
         expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
-        rules.merge_star.output
+        expand("{outfile}/star_matrix/{outname}_merged_star.tab", outfile=outfile, outname=outname)
     params: name='all', partition='quake,normal', mem='1024'

@@ -138,7 +138,7 @@ def convert_transcript_to_gene(infile, transcript_annotation, outfile,
                        remove_last_nrows=5):
     X = load_dataframes(infile, remove_last_nrows=remove_last_nrows)
     ann = pd.read_csv(transcript_annotation, sep='\t', index_col=0)
-    Y = convert_id_to_gene(X, ann, start='transcript', end='gene')
+    Y = convert_id_to_gene(X.T, ann, start='transcript', end='gene').T
     Y.to_csv(outfile, sep='\t', compression='gzip')
 
 ''' Load expression matrix as pandas dataframe. Typically we remove the last

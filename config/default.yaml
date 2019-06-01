@@ -1,9 +1,11 @@
 partition: quake,normal
-inputDir: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/sequencing_data
+inputDir: ./Example_data 
 outputDir: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/htseq_star_results
 plates:
-    - Test_data/1009900601
-    - Test_data/1009900602
+    - SequencingRun_001/Plate_001
+    - SequencingRun_001/Plate_002
+    - SequencingRun_002/Plate_003
+    - SequencingRun_002/Plate_004
 refIndex: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/MM_TGME49_transgenes_gff3_index
 annotation: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49.tdt_gfp.ercc.gff3
 htseq_mode: intersect_strict
