@@ -19,4 +19,17 @@ rule merge_star:
         time='1:00:00'
     run: merge_star_tables(input, output[0])
 
-
+rule gzip_tables:
+    input:
+        rules.merge_htseq.output,
+        rules.merge_star.output
+    output:
+        "{outfile}/transcript_matrix/{outname}_merged_htseq.tab.gz",
+        "{outfile}/star_matrix/{outname}_merged_star.tab.gz"
+    params:
+        name='gzip_tables',
+        partition='quake,normal',
+        mem='10000',
+        time='10:00'
+    shell:
+        "gzip {input}"

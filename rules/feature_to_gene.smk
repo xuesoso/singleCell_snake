@@ -11,7 +11,9 @@ rule make_transcript_annotation:
         make_annotation_dataframe(input[0], input[0])
 
 rule make_gene_exp:
-    input: "{outfile}/transcript_matrix/{outname}_merged_htseq.tab", rules.make_transcript_annotation.output
+    input:
+        "{outfile}/transcript_matrix/{outname}_merged_htseq.tab.gz",
+        rules.make_transcript_annotation.output
     output: "{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz"
     params:
         name='gene_expression',
