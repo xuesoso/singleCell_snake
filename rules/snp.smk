@@ -1,3 +1,8 @@
+"""
+Scripts originally provided by Derek Croote
+Not tested on current rule sets.
+"""
+
 rule bam_to_vcf:
     """ Generates VCF for IGH region """
     input:
