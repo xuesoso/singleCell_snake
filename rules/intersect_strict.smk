@@ -6,7 +6,7 @@ rule htseq:
     params:
         name='htseq',
         partition=PART,
-        mem='5000',
+        mem='10000',
     shell: "htseq-count -s no -r pos -f bam -m intersection-strict "
             "-i Parent {input.bam} {REFERENCE_ANNOTATION} > {output}"
 
