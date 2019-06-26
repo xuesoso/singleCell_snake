@@ -2,19 +2,20 @@
 """ Create a genome reference index """
 rule star_index:
     input:
-        REFERENCE_FASTA,
-        REFERENCE_ANNOTATION
+        fasta=REFERENCE_FASTA,
+        annotation=REFERENCE_ANNOTATION
     output:
-        REFERENCE_INDEX
+        ### Since Snakemake 5.2 we need to specify directory output
+        directory(REFERENCE_INDEX)
     params:
         name='star_index',
         partition=PART,
-        mem=32000,
+        mem=64000,
         time='1:00:00',
         threads=16,
-        sparsity=2
+        sparsity=SPARSITY
     shell:
         "mkdir -p {output} && "
         "STAR --runMode genomeGenerate --runThreadN {params.threads} "
-        "--genomeSAsparseD {params.sparsity} --genomeFastaFiles {input[0]} "
-        "--genomeDir {output} --sjdbGTFfile {input[1]} --sjdbGTFtagExonParentTranscript Parent --sjdbOverhang 100"
+        "--genomeSAsparseD {params.sparsity} --genomeFastaFiles {input.fasta} "
+        "--genomeDir {output} --sjdbGTFfile {input.annotation} --sjdbGTFtagExonParentTranscript Parent --sjdbOverhang 100"

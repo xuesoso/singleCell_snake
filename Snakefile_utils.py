@@ -14,7 +14,7 @@ def get_all_fqgz(wildcards):
 ##### Function for loading all bams
 def get_all_bams(wildcards):
     """ Return all samples containing bams under current folder """
-    bams = glob.glob('{sample}/*.bam'.format(sample=wildcards.all_samples))
+    bams = glob.glob('{sample}/*/*.bam'.format(sample=wildcards.all_samples))
     return [bams]
 
 

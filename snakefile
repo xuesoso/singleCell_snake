@@ -4,7 +4,6 @@ import os
 ## Input locations
 REFERENCE_ANNOTATION = config['annotation']
 TRANSCRIPT_ANNOTATION = transcript_annotation_name(REFERENCE_ANNOTATION)
-# REFERENCE_INDEX = config['refIndex']
 REFERENCE_FASTA = config['refFasta']
 REFERENCE_INDEX = '.'.join(REFERENCE_FASTA.split('.')[:-1]) + '.starIndex'
 INPUTFILE = config['inputDir']
@@ -12,6 +11,17 @@ PLATES = config['plates']
 
 ## Rule parameters
 HTSEQ_MODE = config['htseq_mode']
+
+## Set sparsity of genome index (2 if more than 1G, 1 if less than 1G)
+size_of_fasta = os.stat(REFERENCE_FASTA).st_size <= 107374182
+if size_of_fasta:
+    SPARSITY = 1
+    STAR_MEM = 8000
+    STAR_TIME = '4:00:00'
+else:
+    SPARSITY = 2
+    STAR_MEM = 30000
+    STAR_TIME = '10:00:00'
 
 ## Cluster parameters
 PART = config['partition']
@@ -34,6 +44,7 @@ if 'outname' not in config.keys():
 else:
     outname = config['outname']
 
+include: "./rules/genome_index.smk"
 include: './rules/STAR.smk'
 
 """ Count reads mapping to features using htseq """
@@ -51,13 +62,11 @@ else:
 include: "./rules/merge_output.smk"
 include: "./rules/feature_to_gene.smk"
 include: "./rules/snp.smk"
-include: "./rules/genome_index.smk"
 
 rule all:
     input:
         expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
         expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname),
-        # rules.bam_to_vcf.output
         expand("{all_samples}/full_variants.vcf.gz", all_samples=all_samples)
     params:
         name='all',

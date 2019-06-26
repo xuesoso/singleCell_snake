@@ -7,7 +7,7 @@ rule bam_to_vcf:
     """ Generates variable snp calling """
     input:
         fasta=REFERENCE_FASTA,
-        bam=rules.star.output[0]
+        bam=get_all_bams
     output:
         "{all_samples}/full_variants.vcf.gz"
     params:

@@ -4,7 +4,7 @@
 """ genome index in memory. This saves a lot of loading time """
 rule star:
     input:
-        REFERENCE_INDEX,
+        rules.star_index.output,
         get_all_fqgz
     output:
         "{all_samples}/Aligned.sortedByCoord.out.bam",
@@ -13,8 +13,8 @@ rule star:
     params:
         name='star',
         partition=PART,
-        mem=30000,
-        time='12:00:00'
+        mem=STAR_MEM,
+        time=STAR_TIME
     shell:  "wdir=$(dirname {output[0]})/ && "
             "echo $wdir && "
             "STAR "

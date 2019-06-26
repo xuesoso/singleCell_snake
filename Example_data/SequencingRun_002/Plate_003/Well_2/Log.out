@@ -174,15 +174,15 @@ soloOutFileNames                  Solo.out/   genes.tsv   barcodes.tsv   matrix.
 soloFeatures                      Gene   
 soloUMIdedup                      1MM_All   
 ##### Command Line:
-STAR --genomeDir /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/MM_TGME49_transgenes_gff3_index --readFilesIn ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz --outSAMstrandField intronMotif --readFilesCommand gunzip -c --outFileNamePrefix ./Example_data/SequencingRun_002/Plate_003/Well_2/ --outSAMtype BAM SortedByCoordinate --outSAMattributes NH HI AS NM MD --outReadsUnmapped Fastx --clip3pAdapterSeq CTGTCTCTTATACACATCT --outFilterType BySJout --outFilterMultimapNmax 20 --outSAMprimaryFlag AllBestScore --outFilterScoreMinOverLread 0.4 --outFilterMatchNminOverLread 0.4 --outFilterMismatchNmax 999 --outFilterMismatchNoverLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --twopassMode Basic --alignSJDBoverhangMin 1
+STAR --genomeDir /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.starIndex --readFilesIn Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz --outSAMstrandField intronMotif --readFilesCommand gunzip -c --outFileNamePrefix Example_data/SequencingRun_002/Plate_003/Well_2/ --outSAMtype BAM SortedByCoordinate --outSAMattributes NH HI AS NM MD --outReadsUnmapped Fastx --clip3pAdapterSeq CTGTCTCTTATACACATCT --outFilterType BySJout --outFilterMultimapNmax 20 --outSAMprimaryFlag AllBestScore --outFilterScoreMinOverLread 0.4 --outFilterMatchNminOverLread 0.4 --outFilterMismatchNmax 999 --outFilterMismatchNoverLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --twopassMode Basic --alignSJDBoverhangMin 1
 ##### Initial USER parameters from Command Line:
-outFileNamePrefix                 ./Example_data/SequencingRun_002/Plate_003/Well_2/
+outFileNamePrefix                 Example_data/SequencingRun_002/Plate_003/Well_2/
 ###### All USER parameters from Command Line:
-genomeDir                     /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/MM_TGME49_transgenes_gff3_index     ~RE-DEFINED
-readFilesIn                   ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz   ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz        ~RE-DEFINED
+genomeDir                     /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.starIndex     ~RE-DEFINED
+readFilesIn                   Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz   Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz        ~RE-DEFINED
 outSAMstrandField             intronMotif     ~RE-DEFINED
 readFilesCommand              gunzip   -c        ~RE-DEFINED
-outFileNamePrefix             ./Example_data/SequencingRun_002/Plate_003/Well_2/     ~RE-DEFINED
+outFileNamePrefix             Example_data/SequencingRun_002/Plate_003/Well_2/     ~RE-DEFINED
 outSAMtype                    BAM   SortedByCoordinate        ~RE-DEFINED
 outSAMattributes              NH   HI   AS   NM   MD        ~RE-DEFINED
 outReadsUnmapped              Fastx     ~RE-DEFINED
@@ -203,10 +203,10 @@ alignSJDBoverhangMin          1     ~RE-DEFINED
 ##### Finished reading parameters from all sources
 
 ##### Final user re-defined parameters-----------------:
-genomeDir                         /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/MM_TGME49_transgenes_gff3_index
-readFilesIn                       ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz   ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz   
+genomeDir                         /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.starIndex
+readFilesIn                       Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz   Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz   
 readFilesCommand                  gunzip   -c   
-outFileNamePrefix                 ./Example_data/SequencingRun_002/Plate_003/Well_2/
+outFileNamePrefix                 Example_data/SequencingRun_002/Plate_003/Well_2/
 outReadsUnmapped                  Fastx
 outSAMtype                        BAM   SortedByCoordinate   
 outSAMstrandField                 intronMotif
@@ -228,7 +228,7 @@ twopassMode                       Basic
 
 -------------------------------
 ##### Final effective command line:
-STAR   --genomeDir /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/MM_TGME49_transgenes_gff3_index   --readFilesIn ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz   ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz      --readFilesCommand gunzip   -c      --outFileNamePrefix ./Example_data/SequencingRun_002/Plate_003/Well_2/   --outReadsUnmapped Fastx   --outSAMtype BAM   SortedByCoordinate      --outSAMstrandField intronMotif   --outSAMattributes NH   HI   AS   NM   MD      --outSAMprimaryFlag AllBestScore   --outFilterType BySJout   --outFilterMultimapNmax 20   --outFilterScoreMinOverLread 0.4   --outFilterMatchNminOverLread 0.4   --outFilterMismatchNmax 999   --outFilterMismatchNoverLmax 0.04   --clip3pAdapterSeq CTGTCTCTTATACACATCT      --alignIntronMin 20   --alignIntronMax 1000000   --alignMatesGapMax 1000000   --alignSJoverhangMin 8   --alignSJDBoverhangMin 1   --twopassMode Basic
+STAR   --genomeDir /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.starIndex   --readFilesIn Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz   Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz      --readFilesCommand gunzip   -c      --outFileNamePrefix Example_data/SequencingRun_002/Plate_003/Well_2/   --outReadsUnmapped Fastx   --outSAMtype BAM   SortedByCoordinate      --outSAMstrandField intronMotif   --outSAMattributes NH   HI   AS   NM   MD      --outSAMprimaryFlag AllBestScore   --outFilterType BySJout   --outFilterMultimapNmax 20   --outFilterScoreMinOverLread 0.4   --outFilterMatchNminOverLread 0.4   --outFilterMismatchNmax 999   --outFilterMismatchNoverLmax 0.04   --clip3pAdapterSeq CTGTCTCTTATACACATCT      --alignIntronMin 20   --alignIntronMax 1000000   --alignMatesGapMax 1000000   --alignSJoverhangMin 8   --alignSJDBoverhangMin 1   --twopassMode Basic
 
 ##### Final parameters after user input--------------------------------:
 versionGenome                     2.7.0d
@@ -238,7 +238,7 @@ runMode                           alignReads
 runThreadN                        1
 runDirPerm                        User_RWX
 runRNGseed                        777
-genomeDir                         /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/MM_TGME49_transgenes_gff3_index
+genomeDir                         /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.starIndex
 genomeLoad                        NoSharedMemory
 genomeFastaFiles                  -   
 genomeChainFiles                  -   
@@ -249,7 +249,7 @@ genomeSuffixLengthMax             18446744073709551615
 genomeFileSizes                   0   
 genomeConsensusFile               -
 readFilesType                     Fastx   
-readFilesIn                       ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz   ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz   
+readFilesIn                       Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz   Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz   
 readFilesPrefix                   -
 readFilesCommand                  gunzip   -c   
 readMatesLengthsIn                NotEqual
@@ -266,7 +266,7 @@ limitOutSJoneRead                 1000
 limitBAMsortRAM                   0
 limitSjdbInsertNsj                1000000
 limitNreadsSoft                   18446744073709551615
-outFileNamePrefix                 ./Example_data/SequencingRun_002/Plate_003/Well_2/
+outFileNamePrefix                 Example_data/SequencingRun_002/Plate_003/Well_2/
 outTmpDir                         -
 outTmpKeep                        None
 outStd                            Log
@@ -407,43 +407,43 @@ soloUMIdedup                      1MM_All
 ----------------------------------------
 
 
-   Input read files for mate 1, from input string ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
--rw-rw----+ 1 yuanxue quake 82503 Jun  1 13:05 ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
+   Input read files for mate 1, from input string Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
+-rw-rw----+ 1 yuanxue quake 82503 Jun  1 13:05 Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
 
    readsCommandsFile:
-exec > "./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp/tmp.fifo.read1"
+exec > "Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp/tmp.fifo.read1"
 echo FILE 0
-gunzip   -c      "./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz"
+gunzip   -c      "Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz"
 
 
-   Input read files for mate 2, from input string ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
--rw-rw----+ 1 yuanxue quake 89498 Jun  1 13:05 ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
+   Input read files for mate 2, from input string Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
+-rw-rw----+ 1 yuanxue quake 89498 Jun  1 13:05 Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
 
    readsCommandsFile:
-exec > "./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp/tmp.fifo.read2"
+exec > "Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp/tmp.fifo.read2"
 echo FILE 0
-gunzip   -c      "./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz"
+gunzip   -c      "Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz"
 
 WARNING --outSAMstrandField=intronMotif, therefore STAR will output XS attribute
 WARNING: --limitBAMsortRAM=0, will use genome size as RAM limit for BAM sorting
 Finished loading and checking parameters
 Reading genome generation parameters:
-### STAR   --runMode genomeGenerate   --runThreadN 8   --genomeDir MM_TGME49_transgenes_gff3_index   --genomeFastaFiles ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.fasta      --genomeSAsparseD 2   --sjdbGTFfile ToxoDB-36_TgondiiME49.tdt_gfp.musculus.ercc.gff3   --sjdbGTFtagExonParentTranscript Parent   --sjdbOverhang 100
+### STAR   --runMode genomeGenerate   --runThreadN 16   --genomeDir /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.starIndex   --genomeFastaFiles /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.fasta      --genomeSAsparseD 2   --sjdbGTFfile /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49.tdt_gfp.ercc.gff3   --sjdbGTFtagExonParentTranscript Parent   --sjdbOverhang 100
 ### GstrandBit=34
 versionGenome                 2.7.0d     ~RE-DEFINED
-genomeFastaFiles              ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.fasta        ~RE-DEFINED
+genomeFastaFiles              /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.fasta        ~RE-DEFINED
 genomeSAindexNbases           14     ~RE-DEFINED
 genomeChrBinNbits             18     ~RE-DEFINED
 genomeSAsparseD               2     ~RE-DEFINED
 sjdbOverhang                  100     ~RE-DEFINED
 sjdbFileChrStartEnd           -        ~RE-DEFINED
-sjdbGTFfile                   ToxoDB-36_TgondiiME49.tdt_gfp.musculus.ercc.gff3     ~RE-DEFINED
+sjdbGTFfile                   /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49.tdt_gfp.ercc.gff3     ~RE-DEFINED
 sjdbGTFchrPrefix              -     ~RE-DEFINED
 sjdbGTFfeatureExon            exon     ~RE-DEFINED
 sjdbGTFtagExonParentTranscriptParent     ~RE-DEFINED
 sjdbGTFtagExonParentGene      gene_id     ~RE-DEFINED
 sjdbInsertSave                Basic     ~RE-DEFINED
-genomeFileSizes               9115873573   12506466795        ~RE-DEFINED
+genomeFileSizes               9060155167   12021358833        ~RE-DEFINED
 Genome version is compatible with current STAR
 Number of real (reference) chromosomes= 2466
 1	TGME49_chrIa	1859933	0
@@ -2913,81 +2913,75 @@ Number of real (reference) chromosomes= 2466
 2465	transgene:TdTomato	1430	9051570176
 2466	transgene:GFP	725	9051832320
 --sjdbOverhang = 100 taken from the generated genome
-Started loading the genome: Tue Jun 25 21:39:53 2019
+Started loading the genome: Wed Jun 26 10:32:02 2019
 
-Genome: size given as a parameter = 9115873573
-SA: size given as a parameter = 12506466795
+Genome: size given as a parameter = 9060155167
+SA: size given as a parameter = 12021358833
 SAindex: size given as a parameter = 1
 Read from SAindex: pGe.gSAindexNbases=14  nSAi=357913940
-nGenome=9115873573;  nSAbyte=12506466795
-GstrandBit=34   SA number of indices=2858620981
+nGenome=9060155167;  nSAbyte=12021358833
+GstrandBit=34   SA number of indices=2747739161
 Shared memory is not used for genomes. Allocated a private copy of the genome.
-Genome file size: 9115873573 bytes; state: good=1 eof=0 fail=0 bad=0
-Loading Genome ... done! state: good=1 eof=0 fail=0 bad=0; loaded 9115873573 bytes
-SA file size: 12506466795 bytes; state: good=1 eof=0 fail=0 bad=0
-Loading SA ... done! state: good=1 eof=0 fail=0 bad=0; loaded 12506466795 bytes
+Genome file size: 9060155167 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading Genome ... done! state: good=1 eof=0 fail=0 bad=0; loaded 9060155167 bytes
+SA file size: 12021358833 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading SA ... done! state: good=1 eof=0 fail=0 bad=0; loaded 12021358833 bytes
 Loading SAindex ... done: 1655352103 bytes
-Finished loading the genome: Tue Jun 25 21:40:30 2019
+Finished loading the genome: Wed Jun 26 10:32:34 2019
 
-Processing splice junctions database sjdbN=317309,   pGe.sjdbOverhang=100 
+Processing splice junctions database sjdbN=40103,   pGe.sjdbOverhang=100 
 To accommodate alignIntronMax=1000000 redefined winBinNbits=18
 To accommodate alignIntronMax=1000000 and alignMatesGapMax=1000000, redefined winFlankNbins=4 and winAnchorDistNbins=8
-Opening the file: ./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//FilterBySJoutFiles.mate1.thread0 ... ok
-Opening the file: ./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//FilterBySJoutFiles.mate2.thread0 ... ok
+Opening the file: Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//FilterBySJoutFiles.mate1.thread0 ... ok
+Opening the file: Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//FilterBySJoutFiles.mate2.thread0 ... ok
 Starting to map file # 0
-mate 1:   ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
-mate 2:   ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
+mate 1:   Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
+mate 2:   Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
 Thread #0 end of input stream, nextChar=-1
 Completed: thread #0
-Jun 25 21:40:32   Loaded database junctions from the generated genome /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/MM_TGME49_transgenes_gff3_index/sjdbList.out.tab: 317309 total junctions
+Jun 26 10:32:35   Loaded database junctions from the generated genome /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.starIndex/sjdbList.out.tab: 40103 total junctions
 
-Jun 25 21:40:32   Loaded database junctions from the 1st pass file: ./Example_data/SequencingRun_002/Plate_003/Well_2/_STARpass1//SJ.out.tab: 317440 total junctions
+Jun 26 10:32:35   Loaded database junctions from the 1st pass file: Example_data/SequencingRun_002/Plate_003/Well_2/_STARpass1//SJ.out.tab: 40234 total junctions
 
-WARNING: long repeat for junction # 120851 : 5 112774527 112775017; left shift = 255; right shift = 69
-WARNING: long repeat for junction # 123203 : 5 123190235 123190960; left shift = 255; right shift = 19
-WARNING: long repeat for junction # 132227 : 6 48754635 48755196; left shift = 81; right shift = 255
-WARNING: long repeat for junction # 163880 : 7 141808196 141810304; left shift = 255; right shift = 255
-WARNING: long repeat for junction # 241263 : 13 36008518 36189203; left shift = 255; right shift = 29
-WARNING: long repeat for junction # 248740 : 13 119495135 119609191; left shift = 36; right shift = 255
-Jun 25 21:40:33   Finished preparing junctions
-Jun 25 21:40:33 ..... inserting junctions into the genome indices
-Jun 25 21:40:36   Finished SA search: number of new junctions=6, old junctions=317309
-Jun 25 21:40:36   Finished sorting SA indicesL nInd=2400
-Genome size with junctions=9115874779  9052094464   63780315
+Jun 26 10:32:35   Finished preparing junctions
+Jun 26 10:32:35 ..... inserting junctions into the genome indices
+Jun 26 10:32:36   Finished SA search: number of new junctions=6, old junctions=40103
+Jun 26 10:32:36   Finished sorting SA indicesL nInd=2400
+Genome size with junctions=9060156373  9052094464   8061909
 GstrandBit1=34   GstrandBit=34
-Jun 25 21:41:18   Finished inserting junction indices
-Jun 25 21:41:26   Finished SAi
-Jun 25 21:41:26 ..... finished inserting junctions into genome
+Jun 26 10:33:12   Finished inserting junction indices
+Jun 26 10:33:18   Finished SAi
+Jun 26 10:33:18 ..... finished inserting junctions into genome
 
-   Input read files for mate 1, from input string ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
--rw-rw----+ 1 yuanxue quake 82503 Jun  1 13:05 ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
-
-   readsCommandsFile:
-exec > "./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp/tmp.fifo.read1"
-echo FILE 0
-gunzip   -c      "./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz"
-
-
-   Input read files for mate 2, from input string ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
--rw-rw----+ 1 yuanxue quake 89498 Jun  1 13:05 ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
+   Input read files for mate 1, from input string Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
+-rw-rw----+ 1 yuanxue quake 82503 Jun  1 13:05 Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
 
    readsCommandsFile:
-exec > "./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp/tmp.fifo.read2"
+exec > "Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp/tmp.fifo.read1"
 echo FILE 0
-gunzip   -c      "./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz"
+gunzip   -c      "Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz"
 
-Opening the file: ./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//Unmapped.out.mate1.thread0 ... ok
-Opening the file: ./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//Unmapped.out.mate2.thread0 ... ok
-Opening the file: ./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//FilterBySJoutFiles.mate1.thread0 ... ok
-Opening the file: ./Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//FilterBySJoutFiles.mate2.thread0 ... ok
+
+   Input read files for mate 2, from input string Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
+-rw-rw----+ 1 yuanxue quake 89498 Jun  1 13:05 Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
+
+   readsCommandsFile:
+exec > "Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp/tmp.fifo.read2"
+echo FILE 0
+gunzip   -c      "Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz"
+
+Opening the file: Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//Unmapped.out.mate1.thread0 ... ok
+Opening the file: Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//Unmapped.out.mate2.thread0 ... ok
+Opening the file: Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//FilterBySJoutFiles.mate1.thread0 ... ok
+Opening the file: Example_data/SequencingRun_002/Plate_003/Well_2/_STARtmp//FilterBySJoutFiles.mate2.thread0 ... ok
 Starting to map file # 0
-mate 1:   ./Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
-mate 2:   ./Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
+mate 1:   Example_data/SequencingRun_002/Plate_003/Well_2/R1.fastq.gz
+mate 2:   Example_data/SequencingRun_002/Plate_003/Well_2/R2.fastq.gz
 Thread #0 end of input stream, nextChar=-1
 Completed: thread #0
 Completed stage 1 mapping of outFilterBySJout mapping
 Detected 0 novel junctions that passed filtering, will proceed to filter reads that contained unannotated junctions
-BAM sorting: 1824 mapped reads
+BAM sorting: 1826 mapped reads
 BAM sorting bins genomic start loci:
 1	0	1412673
 2	1	925510
@@ -3036,8 +3030,8 @@ BAM sorting bins genomic start loci:
 45	1734	235
 46	1965	692
 47	2232	1016
-48	2276	80244413
+48	2276	66732885
 Completed: thread #0
-Jun 25 21:41:32 ..... started sorting BAM
-Max memory needed for sorting = 13845
+Jun 26 10:33:24 ..... started sorting BAM
+Max memory needed for sorting = 15587
 ALL DONE!

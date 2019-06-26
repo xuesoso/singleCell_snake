@@ -15,10 +15,16 @@ config=$(basename $1)
 MY_HOME=/oak/stanford/groups/quake/yuanxue
 SCRIPTDIR=$MY_HOME/resources/sc_pipeline/snakemake_pipeline/singleCell_snake
 SNAKEFILE=$SCRIPTDIR/snakefile
+SNAKEFILE_SNP=$SCRIPTDIR/snakefile_snp
 CONFIGFILE=$SCRIPTDIR/config/$1
 
 # Specify parameters for snakemake
 RESTART=1
+
+# Load bcftools if on Stanford Sherlock, otherwise you need to make sure system has access to bcftools
+module load biology
+module load bcftools/1.8
+#
 
 if [ "$2" = "unlock" ]; then
     snakemake all -s $SNAKEFILE --configfile $CONFIGFILE --unlock
@@ -29,7 +35,7 @@ elif [ "$2" = 'forceall' ]; then
 elif [ "$2" = 'forcerun' ]; then
     snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART -R
 elif [ "$2" = 'snp' ]; then
-    snakemake bam_to_vcf --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART
+    snakemake all --snakefile $SNAKEFILE_SNP --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART
 else
     snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART
 fi
