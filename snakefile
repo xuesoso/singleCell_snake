@@ -4,8 +4,9 @@ import os
 ## Input locations
 REFERENCE_ANNOTATION = config['annotation']
 TRANSCRIPT_ANNOTATION = transcript_annotation_name(REFERENCE_ANNOTATION)
-REFERENCE_INDEX = config['refIndex']
+# REFERENCE_INDEX = config['refIndex']
 REFERENCE_FASTA = config['refFasta']
+REFERENCE_INDEX = '.'.join(REFERENCE_FASTA.split('.')[:-1]) + '.starIndex'
 INPUTFILE = config['inputDir']
 PLATES = config['plates']
 
@@ -50,6 +51,7 @@ else:
 include: "./rules/merge_output.smk"
 include: "./rules/feature_to_gene.smk"
 include: "./rules/snp.smk"
+include: "./rules/genome_index.smk"
 
 rule all:
     input:
