@@ -14,6 +14,7 @@ rule star:
         name='star',
         partition=PART,
         mem=30000,
+        time='12:00:00'
     shell:  "wdir=$(dirname {output[0]})/ && "
             "echo $wdir && "
             "STAR "

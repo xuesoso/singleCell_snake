@@ -2,7 +2,7 @@ import os, glob
 import pandas as pd
 import numpy as np
 
-##### Function for loading files
+##### Function for loading all R1 and R2 fastqs
 def get_all_fqgz(wildcards):
     """ Return all samples containing read 1 and read 2 under current folder """
     r1 = glob.glob('{sample}/*R1*.fastq.gz'.format(sample=wildcards.all_samples))
@@ -10,6 +10,13 @@ def get_all_fqgz(wildcards):
     assert len(r1) == 1, '{sample}'.format(wildcards.all_samples)
     assert len(r2) == 1
     return [r1[0], r2[0]]
+
+##### Function for loading all bams
+def get_all_bams(wildcards):
+    """ Return all samples containing bams under current folder """
+    bams = glob.glob('{sample}/*.bam'.format(sample=wildcards.all_samples))
+    return [bams]
+
 
 # ##### Functions for getting file names and unzipping files
 def get_all_files(d):

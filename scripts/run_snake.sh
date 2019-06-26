@@ -23,11 +23,13 @@ RESTART=1
 if [ "$2" = "unlock" ]; then
     snakemake all -s $SNAKEFILE --configfile $CONFIGFILE --unlock
 elif [ "$2" = 'dry' ]; then
-    snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete -n --restart-times $RESTART --quiet
+    snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete -n --restart-times $RESTART --quiet
 elif [ "$2" = 'forceall' ]; then
-    snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART -F
+    snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART -F
 elif [ "$2" = 'forcerun' ]; then
-    snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART -R
+    snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART -R
+elif [ "$2" = 'snp' ]; then
+    snakemake bam_to_vcf --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART
 else
-    snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART
+    snakemake all --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j 200 -w 120 -k --rerun-incomplete --restart-times $RESTART
 fi

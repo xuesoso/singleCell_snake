@@ -4,18 +4,17 @@ Not tested on current rule sets.
 """
 
 rule bam_to_vcf:
-    """ Generates VCF for IGH region """
+    """ Generates variable snp calling """
     input:
-        bam='{base}/{sample}/STAR_output/Aligned.out.sorted.bam'
+        # bam='{base}/{sample}/STAR_output/Aligned.out.sorted.bam'
+        bam=rules.star.output[0]
     output:
-        '{base}/{sample}/STAR_output/full_variants.vcf.gz'
+        "{all_samples}/full_variants.vcf.gz"
     params:
         name="vcf",
-        partition=default_partition
-    resources:
-        mem_mb=5000
-    conda:
-        os.path.join(workflow.basedir, 'envs/miniconda.yaml')
+        partition=PART,
+        mem=9000,
+        time='1:00:00'
     shell:
         "bcftools mpileup -Ou -f {REFERENCE_FASTA} {input.bam} |"
         " bcftools call -m -Ou |"

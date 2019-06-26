@@ -5,6 +5,7 @@ import os
 REFERENCE_ANNOTATION = config['annotation']
 TRANSCRIPT_ANNOTATION = transcript_annotation_name(REFERENCE_ANNOTATION)
 REFERENCE_INDEX = config['refIndex']
+REFERENCE_FASTA = config['refFasta']
 INPUTFILE = config['inputDir']
 PLATES = config['plates']
 
@@ -47,9 +48,24 @@ else:
 
 include: "./rules/merge_output.smk"
 include: "./rules/feature_to_gene.smk"
+include: "./rules/snp.smk"
 
 rule all:
     input:
         expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
         expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname)
-    params: name='all', partition='quake,normal', mem='1024'
+    params:
+        name='all',
+        partition='quake,normal',
+        mem='1024',
+        time='1:00'
+
+# rule all_snp:
+    # input:
+        # expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
+        # expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname)
+    # params:
+        # name='all',
+        # partition='quake,normal',
+        # mem='1024',
+        # time='1:00'
