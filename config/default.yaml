@@ -1,5 +1,5 @@
 partition: quake,normal
-inputDir: ./Example_data 
+inputDir: Example_data 
 outputDir: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/htseq_star_results
 plates:
     - SequencingRun_001/Plate_001

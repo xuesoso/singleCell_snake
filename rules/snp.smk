@@ -8,6 +8,7 @@ rule bam_to_vcf:
     input:
         # bam='{base}/{sample}/STAR_output/Aligned.out.sorted.bam'
         bam=rules.star.output[0]
+        # get_all_bams
     output:
         "{all_samples}/full_variants.vcf.gz"
     params:
@@ -16,6 +17,6 @@ rule bam_to_vcf:
         mem=9000,
         time='1:00:00'
     shell:
-        "bcftools mpileup -Ou -f {REFERENCE_FASTA} {input.bam} |"
+        "bcftools mpileup -Ou -f {REFERENCE_FASTA} {input} |"
         " bcftools call -m -Ou |"
         " bcftools filter -e 'INFO/DP < 2' --output-type z -o {output}"

@@ -24,6 +24,7 @@ for f in PLATES:
     base = os.path.join(root_dir, f)
     for j in (os.listdir(base)):
         all_samples.extend([os.path.join(base, j)])
+print(all_samples)
 
 ## Define wildcards for outputs
 outfile = config['outputDir']
@@ -53,19 +54,11 @@ include: "./rules/snp.smk"
 rule all:
     input:
         expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
-        expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname)
+        expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname),
+        # rules.bam_to_vcf.output
+        expand("{all_samples}/full_variants.vcf.gz", all_samples=all_samples)
     params:
         name='all',
         partition='quake,normal',
         mem='1024',
         time='1:00'
-
-# rule all_snp:
-    # input:
-        # expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
-        # expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname)
-    # params:
-        # name='all',
-        # partition='quake,normal',
-        # mem='1024',
-        # time='1:00'
