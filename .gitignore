@@ -5,3 +5,5 @@ _old_scripts/
 *.snakemake/
 config/*
 !config/default.yaml
+Example_data/*
+!Example_data/*/*/*/*.fastq.gz
