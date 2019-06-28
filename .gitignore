@@ -9,5 +9,5 @@ Example_data/*
 !Example_data/*/*/*/*.fastq.gz
 rules/*_chunk*
 rules/*_only*
-snakefile_chunk
-snakefile_snp
+.snakefile_chunk
+.snakefile_snp
