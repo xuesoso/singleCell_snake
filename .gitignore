@@ -7,3 +7,5 @@ config/*
 !config/default.yaml
 Example_data/*
 !Example_data/*/*/*/*.fastq.gz
+rules/*_chunk*
+rules/*_only*
