@@ -10,7 +10,7 @@ Work in progress
 
 ~~+ Add sample dataset~~
 
-~~+ single-cell variant counting analysis
+~~+ single-cell variant counting analysis~~
 
 + Now: Add support for writing to anndata object
 + Now: Enable support for chunky STAR alignment and htseq-count to save memory loading time.
