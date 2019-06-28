@@ -201,24 +201,33 @@ def convert_id_to_gene(X, gene_df, start='transcript', end='gene'):
     return out
 
 ## Experimental: separate inputs into N chunks
-def chunks(l, n=40):
+def chunks(l, n=40, prefix=""):
     out = []
     chunkid = []
     cid = 1
     for i in range(0, len(l), n):
         out.append(l[i:i+n])
-        chunkid.append('group_'+str(cid)+'.in')
+        chunkid.append(os.path.join(prefix, 'group_'+str(cid)))
         cid += 1
     return (out, chunkid)
 
-def write_chunks(wildcards):
-    for g, c in zip(wildcards.groups, wildcards.chunkid):
-        with open(os.path.join(wildcards.root_dir, c), 'w') as f:
-            for sample in g:
-                f.write('%s\n' %sample)
+def write_chunks(d, postfix=''):
+    for key in d:
+        chunk_file = str(key) + postfix
+        if os.path.exists(chunk_file):
+            os.remove(chunk_file)
+        with open(chunk_file, 'w') as f:
+            for pairs in d[chunk_file]:
+                f.write("{}\t".format(pairs[0]))
+                f.write("{}\n".format(pairs[1]))
 
-def load_chunks(wildcards):
-    pass
+def load_chunks(infile, postfix=''):
+    load = []
+    chunk_file = infile + postfix
+    with open(chunk_file, 'r') as f:
+        for line in f:
+            load.append(line.strip().split('\t'))
+    return load
 
 ## Scripts to make dataframe mapping exon/transcript to gene and products
 ''' Figure out transcript annotation name '''

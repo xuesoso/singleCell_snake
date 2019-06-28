@@ -17,17 +17,18 @@ size_of_fasta = os.stat(REFERENCE_FASTA).st_size <= 107374182
 if size_of_fasta:
     SPARSITY = 1
     STAR_MEM = 8000
-    STAR_TIME = '12:00:00'
+    STAR_TIME = '4:00:00'
 else:
     SPARSITY = 2
     STAR_MEM = 30000
-    STAR_TIME = '12:00:00'
+    STAR_TIME = '10:00:00'
 
 ## Cluster parameters
 PART = config['partition']
 CHUNKSIZE = config['chunksize']
 
 ## Define wildcards for inputs
+## Preprocess all input samples into chunks
 root_dir = INPUTFILE
 plate = PLATES
 all_samples = []
@@ -35,6 +36,16 @@ for f in PLATES:
     base = os.path.join(root_dir, f)
     for j in (os.listdir(base)):
         all_samples.extend([os.path.join(base, j)])
+all_samples = sorted(all_samples)
+print(all_samples)
+chunk_samples, chunks = chunks(all_samples, n=CHUNKSIZE, prefix=root_dir)
+samples_to_chunks, chunks_to_samples = {}, {}
+for x, y in zip(chunk_samples, chunks):
+    chunks_to_samples[y] = x
+    for xi in x:
+        samples_to_chunks[xi] = y
+print(samples_to_chunks)
+
 
 ## Define wildcards for outputs
 outfile = config['outputDir']
