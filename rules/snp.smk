@@ -1,6 +1,6 @@
 """
 Scripts originally provided by Derek Croote
-Not tested on current rule sets.
+Tested to work on current pipeline 6/26/2019
 """
 
 rule bam_to_vcf:
