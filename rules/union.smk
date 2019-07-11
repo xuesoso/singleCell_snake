@@ -8,10 +8,11 @@ rule htseq:
         partition=PART,
         mem='5000',
         time='01:00:00'
-    shell: "htseq-count -s no -r pos -f bam -m union "
+    shell: "htseq-count -s no -f bam -m union "
             "-i Parent "
             "--nonunique all "
             "--stranded no "
+            "-r name "
             "--secondary-alignments ignore "
             "--supplementary-alignments ignore "
             "{input.bam} {REFERENCE_ANNOTATION} > {output}"

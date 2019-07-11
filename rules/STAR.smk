@@ -1,13 +1,20 @@
 ## Rules
-""" Future goal: separate samples into groups of specified sizes """
-""" Then we are going to perform STAR in each group while keeping the """
-""" genome index in memory. This saves a lot of loading time """
+"""
+    Future goal: separate samples into groups of specified sizes
+    Then we are going to perform STAR in each group while keeping the
+    genome index in memory. This saves a lot of loading time.
+    We don't want to sort by coordinate as it would increase htseq-count
+    buffer requirement.
+    We also keep all alignments with the best score, instead of keeping one
+    of the best alignments.
+"""
+
 rule star:
     input:
         rules.star_index.output,
         get_all_fqgz
     output:
-        "{all_samples}/Aligned.sortedByCoord.out.bam",
+        "{all_samples}/Aligned.out.bam",
         "{all_samples}/Log.final.out"
     threads: 6
     params:
@@ -23,7 +30,7 @@ rule star:
             "--outSAMstrandField intronMotif "
             "--readFilesCommand gunzip -c "
             "--outFileNamePrefix $wdir "
-            "--outSAMtype BAM SortedByCoordinate "
+            "--outSAMtype BAM Unsorted SortedByCoordinate "
             "--outSAMattributes NH HI AS NM MD "
             "--outReadsUnmapped Fastx "
             "--clip3pAdapterSeq CTGTCTCTTATACACATCT "
