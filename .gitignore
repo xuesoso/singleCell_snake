@@ -9,3 +9,4 @@ Example_data/*
 !Example_data/*/*/*/*.fastq.gz
 rules/*_chunk*
 rules/*_only*
+Log.out

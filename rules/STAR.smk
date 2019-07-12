@@ -15,7 +15,8 @@ rule star:
         get_all_fqgz
     output:
         "{all_samples}/Aligned.out.bam",
-        "{all_samples}/Log.final.out"
+        "{all_samples}/Log.final.out",
+        "{all_samples}/Aligned.sortedByCoord.out.bam"
     threads: 6
     params:
         name='star',
