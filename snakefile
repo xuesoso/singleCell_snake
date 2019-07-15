@@ -47,16 +47,17 @@ include: "./rules/genome_index.smk"
 include: './rules/STAR.smk'
 
 """ Count reads mapping to features using htseq """
-if HTSEQ_MODE == 'union':
-    """ Use union mode """
-    include: './rules/union.smk'
-
-elif HTSEQ_MODE == 'intersect_strict':
-    """ Use intersection-strict mode """
+if HTSEQ_MODE == 'unique':
+    """ Use intersection-strict mode. Count only uniquely mapped. """
     include: './rules/intersect_strict.smk'
 
+elif HTSEQ_MODE == 'multimap':
+    """ Use intersection-strict mode. Count all equally well-mapped.
+    Add a fraction of the features aligned """
+    include: './rules/intersect_strict_nonunique.smk'
+
 else:
-    raise ValueError("HTSEQ_MODE must be either 'union' or 'intersect_strict'")
+    raise ValueError("HTSEQ_MODE must be either 'unique' or 'multimap'")
 
 include: "./rules/merge_output.smk"
 include: "./rules/feature_to_gene.smk"
@@ -66,7 +67,7 @@ rule all:
     input:
         expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
         expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname),
-        expand("{all_samples}/full_variants.vcf.gz", all_samples=all_samples)
+        expand("{all_samples}/variants.vcf.gz", all_samples=all_samples)
     params:
         name='all',
         partition='quake,normal',

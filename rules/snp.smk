@@ -9,7 +9,7 @@ rule bam_to_vcf:
         fasta=REFERENCE_FASTA,
         sorted_bam=rules.star.output[2]
     output:
-        "{all_samples}/full_variants.vcf.gz"
+        "{all_samples}/variants.vcf.gz"
     params:
         name="vcf",
         partition=PART,
