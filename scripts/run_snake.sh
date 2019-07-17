@@ -26,6 +26,7 @@ RESTART=1
 # Load bcftools if on Stanford Sherlock, otherwise you need to make sure system has access to bcftools
 module load biology
 module load bcftools/1.8
+module load samtools
 #
 
 if [ "$2" = "unlock" ]; then

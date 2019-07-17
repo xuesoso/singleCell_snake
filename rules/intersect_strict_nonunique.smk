@@ -7,13 +7,14 @@ rule htseq:
     params:
         name='htseq',
         partition=PART,
-        mem='5000',
+        mem='10000',
         time='01:00:00'
-    shell: "htseq-count -s no -f bam -m intersection-strict "
+    shell: "samtools view -f 0x2 -b {input.bam} | "
+            "htseq-count -s no -f bam -m intersection-strict "
             "-i Parent "
             "--nonunique all "
             "--stranded no "
             "-r name "
             "--secondary-alignments ignore "
             "--supplementary-alignments ignore "
-            "{input.bam} {REFERENCE_ANNOTATION} > {output}"
+            "- {REFERENCE_ANNOTATION} > {output}"

@@ -17,6 +17,8 @@ rule star:
         "{all_samples}/Aligned.out.bam",
         "{all_samples}/Log.final.out",
         "{all_samples}/Aligned.sortedByCoord.out.bam"
+        # "{all_samples}/Aligned.toTranscriptome.out.bam",
+        # "{all_samples}/ReadsPerGene.out.tab"
     threads: 6
     params:
         name='star',
@@ -47,4 +49,5 @@ rule star:
             "--alignMatesGapMax 1000000 "
             "--alignSJoverhangMin 8 "
             "--twopassMode Basic "
+            # "--quantMode TranscriptomeSAM GeneCounts "
             "--alignSJDBoverhangMin 1"

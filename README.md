@@ -20,6 +20,8 @@ Prerequisites
 + STAR v2.60+
 + htseq-count v0.10.0+
 + Python 3+, Pandas, numpy
++ samtools v1.8+
++ bcftools v1.8+
 
 Usage
 -----

@@ -6,7 +6,8 @@ rule htseq:
     params:
         name='htseq',
         partition=PART,
-        mem='5000',
+        mem='10000',
         time='01:00:00'
-    shell: "htseq-count -s no -f bam -m intersection-strict -r name "
-            "-i Parent {input.bam} {REFERENCE_ANNOTATION} > {output}"
+    shell: "samtools view -f 0x2 -b {input.bam} | htseq-count -s no -f bam -m "
+            "intersection-strict -r name -i Parent - {REFERENCE_ANNOTATION} > "
+            "{output}"
