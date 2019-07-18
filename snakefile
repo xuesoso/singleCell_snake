@@ -25,7 +25,13 @@ else:
 
 ## Cluster parameters
 PART = config['partition']
-CHUNKSIZE = config['chunksize']
+# CHUNKSIZE = config['chunksize']
+
+## STAR keep one-best aligned or keep all best aligned
+if "star_keep" not in config.keys():
+    STAR_KEEP = 'one'
+else:
+    STAR_KEEP = config['star_keep']
 
 ## Define wildcards for inputs
 root_dir = INPUTFILE
@@ -43,8 +49,27 @@ if 'outname' not in config.keys():
 else:
     outname = config['outname']
 
+## Define rules
 include: "./rules/genome_index.smk"
-include: './rules/STAR.smk'
+
+""" Align reads using STAR. """
+if STAR_KEEP == 'one':
+    """ Keep only one of the best aligned reads as primary.
+    Mark other reads as secondary. In Htseq, these secondary reads won't be
+    counted. This is deterministic.
+    """
+    include: './rules/STAR_keep_best_one.smk'
+
+elif STAR_KEEP == 'all':
+    """ Mark all of best aligned reads as primary reads. They can be all be
+    counted by Htseq as contributing to one over N to all N multimapped
+    regions.
+    """
+    include: './rules/STAR_keep_all_best.smk'
+
+else:
+    raise ValueError("STAR_KEEP must be either 'one' or 'all'")
+
 
 """ Count reads mapping to features using htseq """
 if HTSEQ_MODE == 'unique':

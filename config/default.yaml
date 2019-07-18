@@ -9,4 +9,5 @@ plates:
 refFasta: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.fasta
 annotation: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49.tdt_gfp.ercc.gff3
 htseq_mode: intersect_strict
+star_keep: one
 outname: final
