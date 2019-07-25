@@ -1,6 +1,7 @@
 import os, glob
 import pandas as pd
 import numpy as np
+import logging
 
 ##### Function for loading all R1 and R2 fastqs
 def get_all_fqgz(wildcards):
@@ -66,8 +67,12 @@ def merge_htseq_tables(matches, outfile):
             for line in f:
                 count = line.rstrip().split("\t")[1]
                 my_counts.append(count)
-        samples.append(sample)
-        counts.append(my_counts)
+            if len(my_counts) > 0:
+                samples.append(sample)
+                counts.append(my_counts)
+            else:
+                logging.warning('{:} is empty'.format(match))
+
 # Print output
     with open(outfile, 'w') as out:
         header = ["symbol"] + samples # header

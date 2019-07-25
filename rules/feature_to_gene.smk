@@ -18,6 +18,6 @@ rule make_gene_exp:
     params:
         name='gene_expression',
         partition='quake,normal',
-        mem='20000',
+        mem='64000',
         time='30:00'
     run: convert_transcript_to_gene(input[0], input[1], output[0])
