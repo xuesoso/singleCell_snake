@@ -5,7 +5,6 @@
 #SBATCH --cpus-per-task=1
 # send mail to this address
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=yuanxue@stanford.edu
 
 config=$(basename $1)
 
@@ -41,7 +40,7 @@ if [ "$2" = "unlock" ]; then
     snakemake $TARGETRULE -s $SNAKEFILE --configfile $CONFIGFILE --unlock
 elif [ "$2" = 'dry' ]; then
     snakemake $TARGETRULE --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j $NJOBS -w $WAIT -k --rerun-incomplete -n --restart-times $RESTART --quiet
-elif [ "$2" = 'force$TARGETRULE' ]; then
+elif [ "$2" = 'forceall' ]; then
     snakemake $TARGETRULE --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j $NJOBS -w $WAIT -k --rerun-incomplete --restart-times $RESTART -F
 elif [ "$2" = 'forcerun' ]; then
     snakemake $TARGETRULE --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j $NJOBS -w $WAIT -k --rerun-incomplete --restart-times $RESTART -R

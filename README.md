@@ -1,4 +1,5 @@
-![Logo](scSnake.png)
+<img src="/home/soso/GitRepositories/singleCell_snake/scSnake.png" width="300">
+
 # singleCell_snake
 Snakemake pipeline for STAR alignment + htseq-count expression quantification for Smart-seq2 workflow.
 
@@ -12,8 +13,8 @@ Work in progress
 
 ~~+ single-cell variant counting analysis~~
 
-+ Now: Add support for writing to anndata object
 + Now: Enable support for chunky STAR alignment and htseq-count to save memory loading time.
++ Future: Add support for writing to anndata object
 
 Prerequisites
 -------------
@@ -22,6 +23,12 @@ Prerequisites
 + Python 3+, Pandas, numpy
 + samtools v1.8+
 + bcftools v1.8+
+
+Cluster configuration
+---------------------
+Please configure values for PARTITION and EMAIL in "do.sh" so I don't receive emails about your completed jobs.
+
+TO-DO: Detailed instructions on loading proper modules on cluster.
 
 Usage
 -----
@@ -33,22 +40,17 @@ Submit remote master job on cluster
 sh do.sh {CUSTOM.YAML}
 ```
 
-To do a dry run
+To do a dry/unlock/forceall/forcerun run
 ```bash
 sh do.sh {CUSTOM.YAML} dry
 ```
 
-To unlock previously failed snakemake run
+To do a local run
 ```bash
-sh do.sh {CUSTOM.YAML} unlock
+sh do.sh {CUSTOM.YAML} local
 ```
 
-To forceall on snakemake
+To run a specific rule
 ```bash
-sh do.sh {CUSTOM.YAML} forceall
-```
-
-To forcerun on snakemake
-```bash
-sh do.sh {CUSTOM.YAML} forcerun
+sh do.sh {CUSTOM.YAML} cluster htseq
 ```
