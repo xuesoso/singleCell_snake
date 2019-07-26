@@ -3,6 +3,10 @@
 # singleCell_snake
 Snakemake pipeline for STAR alignment + htseq-count expression quantification for Smart-seq2 workflow.
 
+DAG illustration of pipeline workflow
+-------------------------------------
+<img src="/home/soso/GitRepositories/singleCell_snake/dag.png" width="1000">
+
 Work in progress
 ----------------
 ~~+ Add support for transcript to gene matrix transformation~~
