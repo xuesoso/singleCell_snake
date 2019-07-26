@@ -5,7 +5,7 @@ Snakemake pipeline for STAR alignment + htseq-count expression quantification fo
 
 DAG illustration of pipeline workflow
 -------------------------------------
-<img src="/home/soso/GitRepositories/singleCell_snake/dag.png" width="1000">
+<img src="dag.png" width="1000">
 
 Work in progress
 ----------------
