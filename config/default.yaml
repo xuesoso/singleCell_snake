@@ -1,13 +1,13 @@
 partition: quake,normal
 inputDir: Example_data 
-outputDir: /oak/stanford/groups/quake/yuanxue/scRNA_seq_data/Toxoplasma_gondii/htseq_star_results
+outputDir: Example_merged_output
 plates:
     - SequencingRun_001/Plate_001
     - SequencingRun_001/Plate_002
     - SequencingRun_002/Plate_003
     - SequencingRun_002/Plate_004
-refFasta: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_Genome.tdt_gfp.musculus.ercc.fasta
-annotation: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49.tdt_gfp.ercc.gff3
+refFasta: Example_genome/genome.ercc.fasta
+annotation: Example_genome/genome.ercc.gff3
 htseq_mode: unique
 star_keep: one
 outname: Example_data
