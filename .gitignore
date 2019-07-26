@@ -1,3 +1,5 @@
+Example_data/*/*/*/
+!Example_data/*/*/*/*fastq.gz
 log/*
 !log/.empty
 bos/
