@@ -10,4 +10,4 @@ refFasta: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_gen
 annotation: /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49.tdt_gfp.ercc.gff3
 htseq_mode: unique
 star_keep: one
-outname: final
+outname: Example_data
