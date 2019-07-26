@@ -1,4 +1,4 @@
-<img src="/home/soso/GitRepositories/singleCell_snake/scSnake.png" width="300">
+<img src="scSnake.png" width="300">
 
 # singleCell_snake
 Snakemake pipeline for STAR alignment + htseq-count expression quantification for Smart-seq2 workflow.
