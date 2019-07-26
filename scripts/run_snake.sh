@@ -11,7 +11,6 @@ config=$(basename $1)
 MY_HOME=/oak/stanford/groups/quake/yuanxue
 SCRIPTDIR=$MY_HOME/resources/sc_pipeline/snakemake_pipeline/singleCell_snake
 SNAKEFILE=$SCRIPTDIR/snakefile
-SNP_RULE=bam_to_vcf
 CONFIGFILE=$SCRIPTDIR/config/$1
 if [ "$2" = "local" ]; then
     NJOBS=10
@@ -46,6 +45,8 @@ elif [ "$2" = 'forcerun' ]; then
     snakemake $TARGETRULE --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j $NJOBS -w $WAIT -k --rerun-incomplete --restart-times $RESTART -R
 elif [ "$2" = 'local' ]; then
     snakemake $TARGETRULE --snakefile $SNAKEFILE --configfile $CONFIGFILE --keep-target-files -j $NJOBS -w $WAIT -k --rerun-incomplete --restart-times $RESTART
+elif [ "$2" = 'dag' ]; then
+    snakemake $TARGETRULE --snakefile $SNAKEFILE --configfile $CONFIGFILE --dag | dot -Tpdf > dag.pdf
 else
     snakemake $TARGETRULE --snakefile $SNAKEFILE --configfile $CONFIGFILE --cluster "sbatch --ntasks=1 --job-name={params.name} --cpus-per-task={threads} --partition={params.partition}  --mem={params.mem} --time={params.time} -o log/{params.name}.%j.log" --keep-target-files -j $NJOBS -w $WAIT -k --rerun-incomplete --restart-times $RESTART
 fi
