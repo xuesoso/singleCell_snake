@@ -67,6 +67,11 @@ elif STAR_KEEP == 'all':
     """
     include: './rules/STAR_keep_all_best.smk'
 
+elif STAR_KEEP == 'unmapped':
+    """ STAR align the Unmapped read pairs.
+    """
+    include: './rules/STAR_unmapped.smk'
+
 else:
     raise ValueError("STAR_KEEP must be either 'one' or 'all'")
 
@@ -88,13 +93,23 @@ include: "./rules/merge_output.smk"
 include: "./rules/feature_to_gene.smk"
 include: "./rules/snp.smk"
 
-rule all:
-    input:
-        expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
-        expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname),
-        expand("{all_samples}/variants.vcf.gz", all_samples=all_samples)
-    params:
-        name='all',
-        partition='quake,normal',
-        mem='1024',
-        time='1:00'
+if STAR_KEEP != 'unmapped':
+    rule all:
+        input:
+            expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
+            expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname),
+            expand("{all_samples}/variants.vcf.gz", all_samples=all_samples)
+        params:
+            name='all',
+            partition='quake,normal',
+            mem='1024',
+            time='1:00'
+else:
+    rule all:
+        input:
+            rules.htseq.output[0]
+        params:
+            name='all',
+            partition='quake,normal',
+            mem='1024',
+            time='1:00'

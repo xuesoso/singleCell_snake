@@ -14,6 +14,17 @@ def get_all_fqgz(wildcards):
     assert len(r2) == 1
     return [r1[0], r2[0]]
 
+def get_all_unmapped(wildcards):
+    '''
+    Return all unmapped samples containing read 1 and read 2 under current
+    folder
+    '''
+    r1 = glob.glob('{sample}/*mate1'.format(sample=wildcards.all_samples))
+    r2 = glob.glob('{sample}/*mate2'.format(sample=wildcards.all_samples))
+    assert len(r1) == 1, '{sample}'.format(wildcards.all_samples)
+    assert len(r2) == 1
+    return [r1[0], r2[0]]
+
 ##### Function for loading all bams
 def get_all_bams(wildcards):
     '''
@@ -21,7 +32,6 @@ def get_all_bams(wildcards):
     '''
     bams = glob.glob('{sample}/*/*.bam'.format(sample=wildcards.all_samples))
     return [bams]
-
 
 ##### Functions for getting file names and unzipping files
 def get_all_files(d):
