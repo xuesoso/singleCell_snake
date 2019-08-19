@@ -1,0 +1,74 @@
+include: "Snakefile_utils.py"
+import os
+
+## Input locations
+REFERENCE_ANNOTATION = config['annotation']
+TRANSCRIPT_ANNOTATION = transcript_annotation_name(REFERENCE_ANNOTATION)
+FEATURES = config['features']
+INPUTFILE = config['inputDir']
+PLATES = config['plates']
+
+## Cluster parameters
+PART = config['partition']
+
+## Define wildcards for inputs
+root_dir = INPUTFILE
+plate = PLATES
+all_samples = []
+for f in PLATES:
+    base = os.path.join(root_dir, f)
+    for j in (os.listdir(base)):
+        all_samples.extend([os.path.join(base, j)])
+
+## Define wildcards for outputs
+outfile = config['outputDir']
+if 'outname' not in config.keys():
+    outname = "final"
+else:
+    outname = config['outname']
+
+## Define rules
+rule identify_features:
+    input:
+        wildcards.FEATURES,
+    output:
+        ""
+    run:
+        ""
+
+rule samtools_sort:
+    input:
+        "{all_samples}/Aligned.out.bam"
+    output:
+        "{all_samples}/Aligned.sorted.out.bam"
+    run:
+        "samtools sort -o {output} {input}"
+
+rule samtools_index:
+    input:
+        "{all_samples}/Aligned.sorted.out.bam"
+    output:
+        "{all_samples}/Aligned.sorted.out.bam.bai"
+    run:
+        "samtools index {input}"
+
+
+rule retrieve_feature:
+    input:
+        rules.samtools_sort.output,
+        rules.identify_features.output,
+        rules.samtools_index.output,
+        wildcards.features
+    output:
+        "{all_samples}/retrieved_features.txt"
+    run:
+        "samtools "
+
+rule all:
+    input:
+        expand("{all_samples}/retrieved_features.txt", all_samples=all_samples)
+    params:
+        name='all',
+        partition='quake,normal',
+        mem='1024',
+        time='1:00'

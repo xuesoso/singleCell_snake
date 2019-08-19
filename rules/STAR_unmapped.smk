@@ -1,6 +1,6 @@
 ## Rules
 """
-    We will gather the mated pairs of Unmapped.out.mate1 and Unmapped.out.mate2, 
+    We will gather the mated pairs of Unmapped.out.mate1 and Unmapped.out.mate2,
     usually produced by a previous STAR run. We can then align these Unmapped reads
     to a genome reference index containing TSO / PCR primers to check self-homology.
 """
@@ -8,7 +8,7 @@
 rule star:
     input:
         rules.star_index.output,
-        get_all_fqgz
+        get_all_unmapped
     output:
         "{all_samples}/Unmapped.Aligned.out.bam",
         "{all_samples}/Unmapped.Log.final.out",
