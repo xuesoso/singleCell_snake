@@ -106,8 +106,7 @@ if STAR_KEEP != 'unmapped':
             time='1:00'
 else:
     rule all:
-        input: expand("{all_samples}/Unmapped.Log.final.out",
-                      all_samples=all_samples)
+        input: expand("{all_samples}/Unmapped.Log.final.out", all_samples=all_samples)
         params:
             name='all',
             partition='quake,normal',
