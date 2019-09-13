@@ -19,6 +19,7 @@ for f in PLATES:
     base = os.path.join(root_dir, f)
     for j in (os.listdir(base)):
         all_samples.extend([os.path.join(base, j)])
+features = get_all_features(TRANSCRIPT_ANNOTATION, FEATURES, feature_type='gene')
 
 ## Define wildcards for outputs
 outfile = config['outputDir']
@@ -58,15 +59,14 @@ rule retrieve_feature:
         rules.samtools_sort.output,
         rules.identify_features.output,
         rules.samtools_index.output,
-        wildcards.features
     output:
-        "{all_samples}/retrieved_features.txt"
+        "{all_samples}/retrieved_features/{features}.sam"
     run:
         "samtools "
 
 rule all:
     input:
-        expand("{all_samples}/retrieved_features.txt", all_samples=all_samples)
+        expand("{all_samples}/retrieved_features/{features}.sam", all_samples=all_samples, features=features)
     params:
         name='all',
         partition='quake,normal',

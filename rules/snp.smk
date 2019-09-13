@@ -9,7 +9,8 @@ rule bam_to_vcf:
         fasta=REFERENCE_FASTA,
         sorted_bam=rules.star.output[2]
     output:
-        "{all_samples}/variants.vcf.gz"
+        vcf="{all_samples}/variants.vcf.gz",
+        csi="{all_samples}/variants.vcf.gz.csi"
     params:
         name="vcf",
         partition=PART,
@@ -19,4 +20,5 @@ rule bam_to_vcf:
         "bcftools mpileup -Ou -f {input.fasta} {input.sorted_bam} |"
         " bcftools call -mv -Ou |"
         # " bcftools call -m -Ou |" ## output all sites
-        " bcftools filter -e 'INFO/DP < 2' --output-type z -o {output}"
+        " bcftools filter -e 'INFO/DP < 2' --output-type z -o {output.vcf}"
+        " && bcftools index -f {output.vcf}"

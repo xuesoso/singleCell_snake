@@ -476,3 +476,26 @@ def group_sum(input_df, rows=False):
         result = result.T
     return result
 
+def get_all_features(infile, keywords, feature_type='gene'):
+    '''
+    Parse each line in the gff3 annotation file, retrieve the alignment
+    position for each feature that matches keywords
+    '''
+    all_positions = []
+    with open(infile, 'r') as f:
+        for line in f.readline():
+            if line[0] != '#':
+                split = line.rstrip().split('\t')
+                if len(split) > 8:
+                    ftype = split[2]
+                    if ftype == feature_type:
+                        chromosome = str(split[0])
+                        start = str(split[4])
+                        end = str(split[5])
+                        strand = split[6]
+                        description = split[-1]
+                        for k in keywords:
+                            if k in description:
+                                position = chromosome + ':' + start + '-' + end
+                                all_positions.append(position)
+    return all_positions

@@ -19,13 +19,25 @@ rule merge_star:
         time='1:00:00'
     run: merge_star_tables(input, output[0])
 
+rule merge_snps:
+    input: expand("{all_samples}/variants.vcf.gz", all_samples=all_samples)
+    output: "{outfile}/snp_matrix/{outname}_merged_vcf.tab"
+    params:
+        name='merge_star',
+        partition='quake,normal',
+        mem='30000',
+        time='20:00'
+    shell:
+        "bcftools merge {input} -o {output}"
+
 rule gzip_tables:
     input:
         rules.merge_htseq.output,
         rules.merge_star.output
     output:
         "{outfile}/transcript_matrix/{outname}_merged_htseq.tab.gz",
-        "{outfile}/star_matrix/{outname}_merged_star.tab.gz"
+        "{outfile}/star_matrix/{outname}_merged_star.tab.gz",
+        "{outfile}/snp_matrix/{outname}_merged_vcf.tab.gz"
     params:
         name='gzip_tables',
         partition='quake,normal',
