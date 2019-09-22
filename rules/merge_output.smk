@@ -20,15 +20,16 @@ rule merge_star:
     run: merge_star_tables(input, output[0])
 
 rule merge_snps:
-    input: expand("{all_samples}/variants.vcf.gz", all_samples=all_samples)
+    input: expand("{all_samples}/variants.vcf.gz", all_samples=all_samples),
+        expand("{all_samples}/variants.vcf.gz.csi", all_samples=all_samples)
     output: "{outfile}/snp_matrix/{outname}_merged_vcf.tab"
     params:
-        name='merge_star',
+        name='merge_snps',
         partition='quake,normal',
         mem='30000',
         time='20:00'
     shell:
-        "bcftools merge {input} -o {output}"
+        "bcftools merge {input[0]} -o {output}"
 
 rule gzip_tables:
     input:

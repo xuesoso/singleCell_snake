@@ -17,11 +17,11 @@ size_of_fasta = os.stat(REFERENCE_FASTA).st_size <= 107374182
 if size_of_fasta:
     SPARSITY = 1
     STAR_MEM = 8000
-    STAR_TIME = '8:00:00'
+    STAR_TIME = '24:00:00'
 else:
     SPARSITY = 2
     STAR_MEM = 30000
-    STAR_TIME = '8:00:00'
+    STAR_TIME = '24:00:00'
 
 ## Cluster parameters
 PART = config['partition']
