@@ -97,8 +97,8 @@ if STAR_KEEP != 'unmapped':
     rule all:
         input:
             expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
-            expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname),
-            expand("{outfile}/snp_matrix/{outname}_merged_vcf.tab.gz", outfile=outfile, outname=outname)
+            expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname)
+            # expand("{outfile}/snp_matrix/{outname}_merged_vcf.tab.gz", outfile=outfile, outname=outname)
         params:
             name='all',
             partition='quake,normal',

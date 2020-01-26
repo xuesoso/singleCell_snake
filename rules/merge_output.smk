@@ -37,8 +37,7 @@ rule gzip_tables:
         rules.merge_star.output
     output:
         "{outfile}/transcript_matrix/{outname}_merged_htseq.tab.gz",
-        "{outfile}/star_matrix/{outname}_merged_star.tab.gz",
-        "{outfile}/snp_matrix/{outname}_merged_vcf.tab.gz"
+        "{outfile}/star_matrix/{outname}_merged_star.tab.gz"
     params:
         name='gzip_tables',
         partition='quake,normal',
