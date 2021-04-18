@@ -38,7 +38,7 @@ root_dir = INPUTFILE
 plate = PLATES
 all_samples = []
 for f in PLATES:
-    base = os.path.join(root_dir, f)
+    base = os.path.join(root_dir, str(f))
     for j in (os.listdir(base)):
         all_samples.extend([os.path.join(base, j)])
 
