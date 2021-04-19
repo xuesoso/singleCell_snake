@@ -8,8 +8,7 @@
 
 config=$(basename $1)
 
-MY_HOME=/oak/stanford/groups/quake/yuanxue
-SCRIPTDIR=$MY_HOME/resources/sc_pipeline/snakemake_pipeline/singleCell_snake
+SCRIPTDIR="$(dirname "$(dirname "$(readlink -fm "$0")")")"
 SNAKEFILE=$SCRIPTDIR/snakefile
 CONFIGFILE=$SCRIPTDIR/config/$1
 if [ "$2" = "local" ]; then

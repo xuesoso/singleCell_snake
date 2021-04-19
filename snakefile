@@ -8,6 +8,8 @@ REFERENCE_FASTA = config['refFasta']
 REFERENCE_INDEX = '.'.join(REFERENCE_FASTA.split('.')[:-1]) + '.starIndex'
 INPUTFILE = config['inputDir']
 PLATES = config['plates']
+PICARD = config['picard']
+ANNOTATED_CDNA = config['annotated_cdna']
 
 ## Rule parameters
 HTSEQ_MODE = config['htseq_mode']
@@ -91,12 +93,15 @@ else:
 
 include: "./rules/merge_output.smk"
 include: "./rules/feature_to_gene.smk"
+include: "./rules/normalize_tpm.smk"
 include: "./rules/snp.smk"
+include: "./rules/average_insert_length.smk"
 
 if STAR_KEEP != 'unmapped':
     rule all:
         input:
             expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tab.gz", outfile=outfile, outname=outname),
+            expand("{outfile}/gene_matrix/{outname}_merged_htseq_gene.tpm.tab.gz", outfile=outfile, outname=outname),
             expand("{outfile}/star_matrix/{outname}_merged_star.tab.gz", outfile=outfile, outname=outname)
             # expand("{outfile}/snp_matrix/{outname}_merged_vcf.tab.gz", outfile=outfile, outname=outname)
         params:

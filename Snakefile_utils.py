@@ -1,4 +1,4 @@
-import os, glob
+import os, glob, gzip
 import pandas as pd
 import numpy as np
 import logging
@@ -112,6 +112,7 @@ def merge_star_tables(matches, outfile):
     percent_reads_unmapped_too_short = []
     percent_reads_unmapped_other = []
     percent_reads_unmapped_too_many_loci = []
+    average_insert_size = []
     for match in matches:
         if match.split("/")[-2] == 'STAR_output':
             sample = match.split("/")[-3]
@@ -147,6 +148,9 @@ def merge_star_tables(matches, outfile):
                 elif "% of reads mapped to too many loci" in line:
                     x = line.rstrip().split()[-1]
                     percent_reads_unmapped_too_many_loci.append(x)
+                elif "average insert length" in line:
+                    x = line.rstrip().split()[-1]
+                    average_insert_size.append(x)
 # Write output
     features = ["input",
                 "read_length",
@@ -156,12 +160,14 @@ def merge_star_tables(matches, outfile):
                 "percent_unmapped_too_many_mismatches",
                 "percent_unmapped_too_short",
                 "percent_unmapped_other",
-                "percent_unmapped_too_many_loci"]
+                "percent_unmapped_too_many_loci",
+                "average_insert_size"]
     stats = [num_input_reads, num_input_read_length, num_uniquely_mapped_reads,
              num_reads_multiple_loci, num_reads_too_many_loci,
              percent_reads_unmapped_too_many_mismatches,
              percent_reads_unmapped_too_short, percent_reads_unmapped_other,
-             percent_reads_unmapped_too_many_loci]
+             percent_reads_unmapped_too_many_loci,
+             average_insert_size]
     with open(outfile, 'w') as out:
         header = ["name"] + features # header
         out.write("\t".join(header) + "\n")
@@ -228,12 +234,13 @@ def convert_id_to_gene(X, gene_df, start='transcript', end='gene'):
     dictionary = {}
     for key, value in zip(gene_df[start].values, gene_df[end].values):
         if type(key) is str:
-            if value == 'Unknown':
-                dictionary[key] = key
-            else:
-                dictionary[key] = value
+            if key not in dictionary:
+                if value == 'Unknown':
+                    dictionary[key] = key
+                else:
+                    dictionary[key] = value
     out = X.copy()
-    new_names = [dictionary[x] if x in dictionary.keys() else x \
+    new_names = [dictionary[x] if x in dictionary else x \
                  for x in out.columns.values]
     out.columns = new_names
     out = group_sum(out, rows=False)
@@ -277,7 +284,7 @@ def transcript_annotation_name(infile):
     dirname = '/'.join(infile.split('/')[:-1])
     return os.path.join(dirname, filename)
 
-def make_annotation_dataframe(infile, outfile):
+def make_annotation_dataframe(infile, outfile, cdna_fns=None, include_utr_cds=False):
     '''
     Create a dataframe that stores exon/transript names with their
     corresponding transcript/gene/product names.
@@ -295,9 +302,9 @@ def make_annotation_dataframe(infile, outfile):
         outname_exon = outpath+'/exon_annotation.tsv.gz'
         outname_transcript = outpath+'/transcript_annotation.tsv.gz'
     print('Saving to {:}'.format(outname_exon))
-    print('Saving to {:}'.format(outname_transcript))
     t_interest_type = ['transcript', 'mRNA', 'tRNA', 'ncRNA', 'rRNA',
                        'pseudogenic_transcript']
+    excluded_type = ['five_prime_UTR', 'three_prime_UTR', 'CDS']
     g_interest_type = ['gene', 'pseudogene', 'ncRNA_gene']
     special_transcripts = ['ERCC-', 'transgene:']
     property_keywords = ['description=', 'Parent=', 'ID=']
@@ -316,9 +323,8 @@ def make_annotation_dataframe(infile, outfile):
         elif 'ENSMUST' in X:
             is_transcript = True
         else:
-            for u in t_interest_type:
-                if feature_type == u:
-                    is_transcript = True
+            if feature_type in t_interest_type:
+                is_transcript = True
         return is_transcript
 
     def check_if_gene(X, feature_type):
@@ -334,9 +340,8 @@ def make_annotation_dataframe(infile, outfile):
         elif 'ENSMUSG' in X:
             is_gene = True
         else:
-            for u in g_interest_type:
-                if feature_type == u:
-                    is_gene = True
+            if feature_type in g_interest_type:
+                is_gene = True
         return is_gene
 
     def check_if_special(X):
@@ -376,19 +381,19 @@ def make_annotation_dataframe(infile, outfile):
                                 parent = u.replace(keyword, '')
                             elif keyword in u and i == 2:
                                 ID = u.replace(keyword, '')
-                    if ID != null_word and feature_type != 'CDS':
-                        if ID not in parent_type.keys():
+                    if ID != null_word:
+                        if ID not in parent_type:
                             parent_type[ID] = feature_type
-                        if ID not in id_length.keys():
+                        if ID not in id_length:
                             id_length[ID] = length
-                        if check_if_gene(ID, feature_type) == True:
+                        if check_if_gene(ID, feature_type):
                             iam = 'gene'
-                        elif check_if_transcript(ID, feature_type) == True:
+                        elif check_if_transcript(ID, feature_type):
                             iam = 'transcript'
                         else:
                             iam = 'id'
                         if parent != null_word:
-                            if check_if_gene(parent, parent_type[parent]) == True:
+                            if check_if_gene(parent, parent_type[parent]):
                                 mom = 'gene'
                             else:
                                 mom = 'transcript'
@@ -396,64 +401,149 @@ def make_annotation_dataframe(infile, outfile):
                             is_special = check_if_special(ID)
                             if iam == 'id':
                                 all_id.append(ID)
-                                if is_special is True:
+                                if is_special:
                                     all_transcript.append(ID)
+                                    if ID not in id_to_transcript:
+                                        id_to_transcript[ID] = [ID]
+                                    if ID not in transcript_to_gene:
+                                        transcript_to_gene[ID] = [ID]
+                                    if ID not in id_desc:
+                                        id_desc[ID] = ID
                             elif iam == 'transcript':
                                 all_transcript.append(ID)
                             if mom == 'transcript':
-                                if ID not in id_to_transcript.keys():
+                                if ID not in id_to_transcript:
                                     id_to_transcript[ID] = [parent]
                                 elif parent not in id_to_transcript[ID]:
                                     id_to_transcript[ID].append(parent)
                             elif mom == 'gene':
-                                if ID not in transcript_to_gene.keys():
+                                if ID not in transcript_to_gene:
                                     transcript_to_gene[ID] = [parent]
                                 elif parent not in transcript_to_gene[ID]:
                                     transcript_to_gene[ID].append(parent)
                                 if iam == 'transcript' and \
-                                   ID not in all_t_to_gene.keys():
+                                   ID not in all_t_to_gene:
                                     all_t_to_gene[ID] = [parent]
                         else:
-                            if ID not in id_desc.keys():
+                            if ID not in id_desc:
                                 if description == null_word:
                                     id_desc[ID] = 'hypothetical protein'
                                 else:
                                     id_desc[ID] = description
+    """
+    There are some features (e.g. chromosome:1) that are not expected to have
+    any mapping to transcript or gene. These features will by default be mapped
+    to "Unknown". Change the value of "null_word" so it's mapped to a different
+    value.
+    """
     df = pd.DataFrame(all_id, columns=['id'], dtype='object')
-    df['transcript'] = [id_to_transcript[x][0] for x in all_id]
+    df['transcript'] = [id_to_transcript[x][0] if x in id_to_transcript else null_word for x in all_id]
     all_t = [x for x in df['transcript'].values]
-    df['gene'] = [transcript_to_gene[x][0] if x in transcript_to_gene.keys() else \
-                  'Unknown' for x in all_t]
+    df['gene'] = [transcript_to_gene[x][0] if x in transcript_to_gene else \
+                  null_word for x in all_t]
     all_g = [x for x in df['gene'].values]
-    df['product'] = [id_desc[x] if x in id_desc.keys() else \
-                     'Unknown' for x in all_g]
-    df['length'] = [id_length[x] for x in df['id'].values]
-    df['gene'] = [x if 'ERCC-' not in y and 'transgene:' not in y else y\
-                  for x, y in zip(df['gene'].values, df['id'].values)]
-    df['product'] = [x if 'ERCC-' not in y and 'transgene:' not in y else y\
-                  for x, y in zip(df['product'].values, df['id'].values)]
+    df['product'] = [id_desc[x] if x in id_desc else \
+                     null_word for x in all_g]
+
+    df['id_type'] = [parent_type[x] if x in parent_type else null_word for x in df['id'].values]
+    df['transcript_type'] = [parent_type[x] if x in parent_type else null_word for x in df['transcript'].values]
+    df['gene_type'] = [parent_type[x] if x in parent_type else null_word for x in df['gene'].values]
+
+    df['id_length'] = [id_length[x] for x in df['id'].values]
+
 #### clean up the transcript / gene names
     df['transcript']= [x.replace('transcript:','') for x in \
                         df['transcript'].values]
     df['gene']= [x.replace('gene:','') for x in \
                         df['gene'].values]
+    """
+    We first try to figure out transcript length by summing up the lengths
+    of exons. By default, we ignore CDS and UTR regions, but this can be
+    overridden by setting "include_utr_cds" option to True.
+    """
+
+    if include_utr_cds:
+        exclude_ind = (~df['transcript'].isin([null_word]))
+    else:
+        exclude_ind = (~df['transcript'].isin([null_word]))&(~df['id_type'].isin(excluded_type))
+
+    transcript_length = dict(df[exclude_ind].groupby(['transcript'])['id_length'].sum())
+    # gene_length = dict(df[exclude_ind].groupby(['gene'])['id_length'].sum())
+
+    """
+    We can optionally supply paths to fasta files that contain annotated cDNA
+    lengths from external data sources. If supplied, the transcript length
+    from these databases will take precedence over the internally determined
+    cDNA lengths. Empirically, in some mouse transcripts, I have found that
+    the differences in transcript length can be as big as tens of thousands bp.
+    """
+
+    external_transcript_length = {}
+    if cdna_fns is not None:
+        if type(cdna_fns) is str:
+            to_sequences(cdna_fns, external_dict=external_transcript_length)
+        elif isinstance(cdna_fns, (list, np.ndarray)):
+            for fn in cdna_fns:
+                to_sequences(fn, external_dict=external_transcript_length)
+        else:
+            raise ValueError('external "cdna_fns" must be either string, list,\
+                    or numpy.ndarray type (multiple fast files)')
+
+    to_calculate_transcript_length = []
+    for x in df['transcript'].values:
+        if x in external_transcript_length:
+            to_calculate_transcript_length.append(external_transcript_length[x])
+        elif x in transcript_length:
+            to_calculate_transcript_length.append(transcript_length[x])
+        else:
+            to_calculate_transcript_length.append(-1)
+
+    df['transcript_length'] = to_calculate_transcript_length
+
     df.to_csv(outname_exon, sep='\t', compression='gzip')
-#### we make a dictionary just for transcripts. Turns out there are many
-#### transcripts that all map to the same exons. So it's better to do feature
-#### counting in transcript space and convert transcript to genes.
-    df = pd.DataFrame(all_transcript, columns=['transcript'], dtype='object')
-    df['gene'] = [all_t_to_gene[x][0] if x in all_t_to_gene.keys() else \
-                  'Unknown' for x in all_transcript]
-    df['product'] = [id_desc[x] if x in id_desc.keys() else \
-                     'Unknown' for x in df['gene'].values]
-    df['transcript']= [x.replace('transcript:','') for x in \
-                        df['transcript'].values]
-    df['gene']= [x.replace('gene:','') for x in df['gene'].values]
-    df['gene'] = [x if 'ERCC-' not in y and 'transgene:' not in y else y\
-                  for x, y in zip(df['gene'].values, df['transcript'].values)]
-    df['product'] = [x if 'ERCC-' not in y and 'transgene:' not in y else y\
-                  for x, y in zip(df['product'].values, df['transcript'].values)]
-    df.to_csv(outname_transcript, sep='\t', compression='gzip')
+
+def to_sequences(fn, external_dict=None):
+    sample_names, sequences, lengths = [], [], []
+    count = 0
+    sequence = ''
+    if fn.split('.')[-1] == 'gz':
+        with gzip.open(fn, 'r') as f:
+            for line in f:
+                line = line.decode().strip()
+                if (line) != '':
+                    if line[0] == '>':
+                        sample_names.append(line[1:].split(' ')[0].split('.')[0])
+                        if count > 0:
+                            lengths.append(len(sequence))
+                            sequences.append(sequence)
+                            sequence = ''
+                    else:
+                        sequence += line
+                        count += 1
+    else:
+        with open(fn, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if (line) != '':
+                    if line[0] == '>':
+                        sample_names.append(line[1:].split(' ')[0].split('.')[0])
+                        if count > 0:
+                            lengths.append(len(sequence))
+                            sequences.append(sequence)
+                            sequence = ''
+                    else:
+                        sequence += line
+                        count += 1
+    if count > 0:
+        lengths.append(len(sequence))
+        sequences.append(sequence)
+        sequence = ''
+    if external_dict is not None:
+        for x, y in zip(sample_names, lengths):
+            external_dict[x] = y
+    else:
+        out = {x:y for x, y in zip(sample_names, lengths)}
+        return out
 
 def group_sum(input_df, rows=False):
     '''
@@ -499,3 +589,26 @@ def get_all_features(infile, keywords, feature_type='gene'):
                                 position = chromosome + ':' + start + '-' + end
                                 all_positions.append(position)
     return all_positions
+
+def tpm_normalize(htseq_fn, ann_fn, star_fn, out_fn, normalize_per_sample=False):
+    ann = pd.read_csv(ann_fn, sep='\t', index_col=0)
+    htseq = load_dataframes(htseq_fn, remove_last_nrows=5)
+    star = pd.read_csv(star_fn, sep='\t', index_col=0)
+    tlen_dict = {x:y for x, y in zip(ann['transcript'], ann['transcript_length'])}
+    tlen = np.array([tlen_dict[x] if x in tlen_dict else -1 for x in htseq.index])
+    flen = star.loc[htseq.columns, 'average_insert_size'].values
+    #### We remove features which don't have corresponding transcript length
+    htseq = htseq[tlen > 0]
+    tlen = tlen[tlen > 0]
+    #### effective fragment length is the mean fragment lengths from PE fastq
+    effectiveLength = tlen.reshape(-1, 1) - flen
+    effectiveLength[effectiveLength < 1] = 1
+    reads_per_kilobase = htseq / (effectiveLength/1000)
+    #### We round off to 5 decimal place to correct for numerical instability
+    #### By default, we do not normalize sample read sum to 1 million
+    if normalize_per_sample:
+        rs = reads_per_kilobase.sum(axis=0).values
+        out = reads_per_kilobase / rs * 1e6
+    else:
+        out = reads_per_kilobase
+    out.to_csv(out_fn, sep='\t', compression='gzip')
