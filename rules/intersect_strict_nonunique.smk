@@ -9,12 +9,12 @@ rule htseq:
         partition=PART,
         mem='8000',
         time='01:00:00'
-    shell: "samtools view {input.bam} | "
-            "htseq-count -s no -f sam -m intersection-strict "
+    shell: "python -m HTSeq.scripts.count -s no -f bam -m intersection-strict "
             "-i Parent "
             "--nonunique all "
             "--stranded no "
             "-r name "
             "--secondary-alignments ignore "
             "--supplementary-alignments ignore "
-            "- {REFERENCE_ANNOTATION} > {output}"
+            "{input.bam} "
+            "{REFERENCE_ANNOTATION} > {output}"
