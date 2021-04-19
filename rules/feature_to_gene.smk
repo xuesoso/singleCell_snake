@@ -1,14 +1,16 @@
 ## Rules
 rule make_transcript_annotation:
-    input: REFERENCE_ANNOTATION
-    output: TRANSCRIPT_ANNOTATION+'_transcript_annotation.tsv.gz'
+    input:
+        reference=REFERENCE_ANNOTATION,
+        annotated_cdna=ANNOTATED_CDNA
+    output: TRANSCRIPT_ANNOTATION+'_exon_annotation.tsv.gz'
     params:
         name='make_annotation',
         partition='quake,normal',
         mem='2000',
         time='20:00'
     run:
-        make_annotation_dataframe(input[0], input[0])
+        make_annotation_dataframe(input.reference, outfile=input.reference, cdna_fns=input.annotated_cdna)
 
 rule make_gene_exp:
     input:

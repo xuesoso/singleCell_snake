@@ -10,4 +10,5 @@ refFasta: Example_genome/genome.ercc.fasta
 annotation: Example_genome/genome.ercc.gff3
 htseq_mode: unique
 star_keep: one
+picard: "java -jar /home/soso/Tools/picard.jar"
 outname: Example_data

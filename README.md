@@ -17,6 +17,8 @@ Work in progress
 
 ~~+ single-cell variant counting analysis~~
 
+~~+ TPM normalization~~
+
 + Now: Enable support for chunky STAR alignment and htseq-count to save memory loading time.
 + Future: Add support for writing to anndata object
 
@@ -27,6 +29,7 @@ Prerequisites
 + Python 3+, Pandas, numpy
 + samtools v1.8+
 + bcftools v1.8+
++ picard (for TPM normalization)
 
 Cluster configuration
 ---------------------

@@ -8,6 +8,8 @@ rule htseq:
         partition=PART,
         mem='8000',
         time='01:00:00'
-    shell: "samtools view {input.bam} | htseq-count -s no -f sam -m "
-            "intersection-strict -r name -i Parent - {REFERENCE_ANNOTATION} > "
-            "{output}"
+    shell: "python -m HTSeq.scripts.count -s no -f bam -m intersection-strict "
+            "-r name "
+            "-i Parent "
+            "{input.bam} "
+            "{REFERENCE_ANNOTATION} > {output}"

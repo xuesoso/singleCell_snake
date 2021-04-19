@@ -1,4 +1,7 @@
 Example_data/*/*/*/
+Example_genome/*
+!Example_genome/genome.ercc*
+!Example_genome/starIndex*
 !Example_data/*/*/*/*fastq.gz
 log/*
 !log/.empty
