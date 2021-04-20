@@ -11,7 +11,7 @@ annotation: Example_genome/genome.ercc.gff3
 htseq_mode: unique
 star_keep: one
 outname: Example_data
-picard: "java -jar /home/soso/Tools/picard.jar"
+picard: "java -jar /home/users/yuanxue/picard.jar"
 annotated_cdna:
     - /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/ToxoplasmaG_ME49_genome/ToxoDB-36_TgondiiME49_AnnotatedTranscripts.fasta.gz
     - /oak/stanford/groups/quake/yuanxue/resources/sc_pipeline/reference_genomes/Mus_musculus_genome/Mus_musculus.GRCm38.cdna.all.fa.gz 

@@ -12,7 +12,7 @@ rule average_insert_length:
         picard=PICARD,
         partition=PART,
         mem='8000',
-        time='00:03:00'
+        time='00:15:00'
     shell:
         """
         cp {input.STAR} {output.STAR}

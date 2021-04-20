@@ -21,6 +21,7 @@ else
     module load biology
     module load bcftools/1.8
     module load samtools
+    module load R
 fi
 
 if [ -z "$3" ]; then
