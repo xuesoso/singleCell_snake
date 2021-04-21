@@ -10,7 +10,7 @@ rule merge_htseq:
     run: merge_htseq_tables(input, output[0])
 
 rule merge_star:
-    input: expand("{all_samples}/STAR.out", all_samples=all_samples)
+    input: expand("{all_samples}/Log.final.out", all_samples=all_samples)
     output: "{outfile}/star_matrix/{outname}_merged_star.tab"
     params:
         name='merge_star',

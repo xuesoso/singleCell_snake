@@ -113,6 +113,7 @@ def merge_star_tables(matches, outfile):
     percent_reads_unmapped_other = []
     percent_reads_unmapped_too_many_loci = []
     average_insert_size = []
+    median_insert_size = []
     for match in matches:
         if match.split("/")[-2] == 'STAR_output':
             sample = match.split("/")[-3]
@@ -151,6 +152,10 @@ def merge_star_tables(matches, outfile):
                 elif "average insert length" in line:
                     x = line.rstrip().split()[-1]
                     average_insert_size.append(x)
+                elif "median insert length" in line:
+                    x = line.rstrip().split()[-1]
+                    median_insert_size.append(x)
+
 # Write output
     features = ["input",
                 "read_length",
@@ -161,13 +166,15 @@ def merge_star_tables(matches, outfile):
                 "percent_unmapped_too_short",
                 "percent_unmapped_other",
                 "percent_unmapped_too_many_loci",
-                "average_insert_size"]
+                "average_insert_size",
+                "median_insert_size"]
     stats = [num_input_reads, num_input_read_length, num_uniquely_mapped_reads,
              num_reads_multiple_loci, num_reads_too_many_loci,
              percent_reads_unmapped_too_many_mismatches,
              percent_reads_unmapped_too_short, percent_reads_unmapped_other,
              percent_reads_unmapped_too_many_loci,
-             average_insert_size]
+             average_insert_size,
+             median_insert_size]
     with open(outfile, 'w') as out:
         header = ["name"] + features # header
         out.write("\t".join(header) + "\n")
@@ -454,8 +461,10 @@ def make_annotation_dataframe(infile, outfile, cdna_fns=None, include_utr_cds=Fa
 #### clean up the transcript / gene names
     df['transcript']= [x.replace('transcript:','') for x in \
                         df['transcript'].values]
-    df['gene']= [x.replace('gene:','') for x in \
-                        df['gene'].values]
+    df['gene'] = [x.replace('gene:', '') \
+                if 'transgene:' not in x \
+                else x for x in df['gene'].values]
+
     """
     We first try to figure out transcript length by summing up the lengths
     of exons. By default, we ignore CDS and UTR regions, but this can be

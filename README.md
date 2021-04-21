@@ -29,8 +29,8 @@ Prerequisites
 + Python 3+, Pandas, numpy
 + samtools v1.8+
 + bcftools v1.8+
-+ picard (for TPM normalization)
-+ R (picard CollectInsertMetrics requires R as a prequisite tool)
+~~+ picard (for TPM normalization)~~
+~~+ R (picard CollectInsertMetrics requires R as a prequisite tool)~~
 
 Cluster configuration
 ---------------------
