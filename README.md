@@ -19,6 +19,8 @@ Work in progress
 
 ~~+ TPM normalization~~
 
++ There are some issues with the transcript to gene conversion. Need to re-validate "rules/feature_to_gene.smk" and the related function in "Snakefile_utils.py"
+
 + Now: Enable support for chunky STAR alignment and htseq-count to save memory loading time.
 + Future: Add support for writing to anndata object
 
